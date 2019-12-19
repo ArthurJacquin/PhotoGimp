@@ -1,0 +1,21 @@
+﻿C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(452,5): warning MSB8028: The intermediate directory (x64\Debug\) contains files shared from another project (PremierProjet.vcxproj).  This can lead to incorrect clean and rebuild behavior.
+  PhotoGimp.cpp
+  Vertex.cpp
+  Génération de code en cours...
+C:\Users\artj3\Documents\Cours\4A ESGI\Math\PhotoGimp\PhotoGimp\PhotoGimp.cpp(65,15): warning C4244: 'argument' : conversion de 'GLuint64' en 'GLuint', perte possible de données
+MSVCRTD.lib(initializers.obj) : warning LNK4098: conflit entre la bibliothÞque par dÚfaut 'libcmt.lib' et les autres bibliothÞquesá; utilisez /NODEFAULTLIB:library
+LINK : warning LNK4286: le symbole '__glewAttachShader' dÚfini dans 'glew32s.lib(glew.obj)' est importÚ par 'GLShader.obj'
+LINK : warning LNK4286: le symbole '__glewCompileShader' dÚfini dans 'glew32s.lib(glew.obj)' est importÚ par 'GLShader.obj'
+LINK : warning LNK4286: le symbole '__glewCreateProgram' dÚfini dans 'glew32s.lib(glew.obj)' est importÚ par 'GLShader.obj'
+LINK : warning LNK4286: le symbole '__glewCreateShader' dÚfini dans 'glew32s.lib(glew.obj)' est importÚ par 'GLShader.obj'
+LINK : warning LNK4286: le symbole '__glewDeleteProgram' dÚfini dans 'glew32s.lib(glew.obj)' est importÚ par 'GLShader.obj'
+LINK : warning LNK4286: le symbole '__glewDeleteShader' dÚfini dans 'glew32s.lib(glew.obj)' est importÚ par 'GLShader.obj'
+LINK : warning LNK4286: le symbole '__glewDetachShader' dÚfini dans 'glew32s.lib(glew.obj)' est importÚ par 'GLShader.obj'
+LINK : warning LNK4286: le symbole '__glewGetProgramInfoLog' dÚfini dans 'glew32s.lib(glew.obj)' est importÚ par 'GLShader.obj'
+LINK : warning LNK4286: le symbole '__glewGetProgramiv' dÚfini dans 'glew32s.lib(glew.obj)' est importÚ par 'GLShader.obj'
+LINK : warning LNK4286: le symbole '__glewGetShaderInfoLog' dÚfini dans 'glew32s.lib(glew.obj)' est importÚ par 'GLShader.obj'
+LINK : warning LNK4286: le symbole '__glewGetShaderiv' dÚfini dans 'glew32s.lib(glew.obj)' est importÚ par 'GLShader.obj'
+LINK : warning LNK4286: le symbole '__glewLinkProgram' dÚfini dans 'glew32s.lib(glew.obj)' est importÚ par 'GLShader.obj'
+LINK : warning LNK4286: le symbole '__glewShaderSource' dÚfini dans 'glew32s.lib(glew.obj)' est importÚ par 'GLShader.obj'
+glew32s.lib(glew.obj) : warning LNK4099: PDB 'vc120.pdb' n'a pu Ûtre trouvÚ avec 'glew32s.lib(glew.obj)' ou sur 'C:\Users\artj3\Documents\Cours\4A ESGI\Math\PhotoGimp\x64\Debug\vc120.pdb'á; l'objet sera liÚ sans informations de dÚbogage
+  PhotoGimp.vcxproj -> C:\Users\artj3\Documents\Cours\4A ESGI\Math\PhotoGimp\x64\Debug\PhotoGimp.exe
