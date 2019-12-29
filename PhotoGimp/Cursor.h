@@ -2,10 +2,14 @@
 #include <GLFW/glfw3.h>
 #pragma once
 #include "Vertex.h"
+#pragma once
+#include <vector>
 
-class Cursor
+class Input
 {
 public:
-	static void mouse_button_callback(GLFWwindow* window, int button, int action, int mods);// Vertex cursor, Vertex* posClick);
+	static void mouse_button_callback(GLFWwindow* window, int button, int action, int mods);
 	static void cursorEnterCallback(GLFWwindow* window, int entered);
+
+	static void keyboard_button_callback(GLFWwindow* window, int key, int scancode, int action, int mods);
 };

@@ -15,6 +15,7 @@
 #endif
 
 #include <iostream>
+#include <vector>
 #include "Vertex.h"
 #include "Cursor.h"
 
@@ -23,9 +24,11 @@ GLShader BasicShader;
 GLuint VAO;
 GLuint VBO;
 GLuint IBO;
-Cursor cursor;
+Input input;
+std::vector<Vertex> vertices;
 
 int width, height;
+
 
 bool Initialise() {
 
@@ -70,7 +73,7 @@ bool Initialise() {
 	//Création VBO
 	glGenBuffers(1, &VBO);
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(Vertex) * 4, triangle, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(Vertex) * vertices.size(), vertices.data(), GL_STATIC_DRAW);
 
 	//Création IBO
 	glGenBuffers(1, &IBO);
@@ -123,7 +126,8 @@ void Display(GLFWwindow* window)
 	//Active VAO -> Render -> reset VAO
 	glBindVertexArray(VAO);
 
-	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, nullptr);
+	//glDrawElements(GL_TRIANGLES, vertices.size(), GL_UNSIGNED_SHORT, nullptr);
+	glDrawArrays(GL_POINTS, 0, vertices.size());
 
 	glBindVertexArray(0);
 }
@@ -151,10 +155,9 @@ int main(void)
 	Initialise();
 
 	//Input
-	glfwSetMouseButtonCallback(window, &cursor.mouse_button_callback);
+	glfwSetMouseButtonCallback(window, &input.mouse_button_callback);
+	glfwSetKeyCallback(window, &input.keyboard_button_callback);
 	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
-	glfwSetCursorEnterCallback(window, &cursor.cursorEnterCallback);
-	glfwSetMouseButtonCallback(window, &cursor.mouse_button_callback);
 	glfwGetFramebufferSize(window, &width, &height);
 
 	/* Loop until the user closes the window */
@@ -165,7 +168,6 @@ int main(void)
 
 		/* Swap front and back buffers */
 		glfwSwapBuffers(window);
-
 		/* Poll for and process events */
 		glfwPollEvents();
 
