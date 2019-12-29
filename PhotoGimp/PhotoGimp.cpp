@@ -8,7 +8,6 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include "GLShader.h"
-#include "Vertex.h"
 
 
 // les repertoires d'includes sont:
@@ -35,6 +34,7 @@
 #endif
 
 #include <iostream>
+#include "Vertex.h"
 
 //Variables globales
 GLShader BasicShader;
