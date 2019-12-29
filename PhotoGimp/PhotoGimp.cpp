@@ -17,7 +17,7 @@
 #include <iostream>
 #include <vector>
 #include "Vertex.h"
-#include "Cursor.h"
+#include "Input.h"
 
 //Variables globales
 GLShader BasicShader;
@@ -170,6 +170,10 @@ int main(void)
 		glfwSwapBuffers(window);
 		/* Poll for and process events */
 		glfwPollEvents();
+
+		/*
+		for (std::vector<Vertex>::const_iterator i = vertices.begin(); i != vertices.end(); ++i)
+			std::cout << *i  << std::endl;*/
 
 	}
 
