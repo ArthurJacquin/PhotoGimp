@@ -1,6 +1,3 @@
-//
-//
-//
 
 // GLEW_STATIC force le linkage statique
 // c-a-d que le code de glew est directement injecte dans l'executable
@@ -9,22 +6,6 @@
 #include <GLFW/glfw3.h>
 #include "GLShader.h"
 
-
-// les repertoires d'includes sont:
-// ../libs/glfw-3.3/include			fenetrage
-// ../libs/glew-2.1.0/include		extensions OpenGL
-// ../libs/stb						gestion des images (entre autre)
-
-// les repertoires des libs sont (en 64-bit):
-// ../libs/glfw-3.3/lib-vc2015
-// ../libs/glew-2.1.0/lib/Release/x64
-
-// Pensez a copier les dll dans le repertoire x64/Debug, cad:
-// glfw-3.3/lib-vc2015/glfw3.dll
-// glew-2.1.0/bin/Release/x64/glew32.dll		si pas GLEW_STATIC
-
-// _WIN32 indique un programme Windows
-// _MSC_VER indique la version du compilateur VC++
 #if defined(_WIN32) && defined(_MSC_VER)
 #pragma comment(lib, "glfw3dll.lib")
 #pragma comment(lib, "glew32s.lib")			// glew32.lib si pas GLEW_STATIC
@@ -35,12 +16,16 @@
 
 #include <iostream>
 #include "Vertex.h"
+#include "Cursor.h"
 
 //Variables globales
 GLShader BasicShader;
 GLuint VAO;
 GLuint VBO;
 GLuint IBO;
+Cursor cursor;
+
+int width, height;
 
 bool Initialise() {
 
@@ -125,7 +110,6 @@ void Terminate()
 
 void Display(GLFWwindow* window)
 {
-	int width, height;
 	glfwGetWindowSize(window, &width, &height);
 
 	glClearColor(0.f, 0.f, 0.f, 0.f);
@@ -166,6 +150,13 @@ int main(void)
 	// toutes nos initialisations vont ici
 	Initialise();
 
+	//Input
+	glfwSetMouseButtonCallback(window, &cursor.mouse_button_callback);
+	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+	glfwSetCursorEnterCallback(window, &cursor.cursorEnterCallback);
+	glfwSetMouseButtonCallback(window, &cursor.mouse_button_callback);
+	glfwGetFramebufferSize(window, &width, &height);
+
 	/* Loop until the user closes the window */
 	while (!glfwWindowShouldClose(window))
 	{
@@ -177,6 +168,7 @@ int main(void)
 
 		/* Poll for and process events */
 		glfwPollEvents();
+
 	}
 
 	// ne pas oublier de liberer la memoire etc...
