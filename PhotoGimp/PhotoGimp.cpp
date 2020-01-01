@@ -66,6 +66,16 @@ bool Initialise() {
 		0, 2, 3
 	};
 
+
+#ifdef WIN32 
+	wglSwapIntervalEXT(1);
+#endif 
+
+	return true;
+}
+
+void updateBuffer()
+{
 	//Création VAO
 	glGenVertexArrays(1, &VAO);
 	glBindVertexArray(VAO);
@@ -76,10 +86,10 @@ bool Initialise() {
 	glBufferData(GL_ARRAY_BUFFER, sizeof(Vertex) * vertices.size(), vertices.data(), GL_STATIC_DRAW);
 
 	//Création IBO
-	glGenBuffers(1, &IBO);
+	/*glGenBuffers(1, &IBO);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, IBO);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned short) * 3 * 2, indices, GL_STATIC_DRAW);
-
+	*/
 	//Position
 	int loc_position = glGetAttribLocation(BasicShader.GetProgram(), "a_position");
 	glVertexAttribPointer(loc_position, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), nullptr);
@@ -96,11 +106,6 @@ bool Initialise() {
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
 
-	#ifdef WIN32 
-		wglSwapIntervalEXT(1);
-	#endif 
-	
-	return true;
 }
 
 void Terminate() 
@@ -163,6 +168,10 @@ int main(void)
 	/* Loop until the user closes the window */
 	while (!glfwWindowShouldClose(window))
 	{
+		if (vertices.size() > 0)
+		{
+			updateBuffer();
+		}
 		/* Render here */
 		Display(window);
 
