@@ -14,9 +14,9 @@ void Input::mouse_button_callback(GLFWwindow * window, int button, int action, i
 	{
 		double xpos, ypos;
 		glfwGetCursorPos(window, &xpos, &ypos);
-		std::cerr << "Cursor Position at :" << xpos << " - " << ypos << std::endl;
+		std::cerr << "Cursor Position at :" << xpos << " , " << ypos << std::endl;
 
-		Vertex newPoint = Vertex(xpos, ypos, 1, 1, 1);
+		Vertex newPoint = Vertex(xpos, ypos);
 		vertices.push_back(newPoint);
 		std::cerr << "vertices size:" << vertices.size() << std::endl;
 	}
@@ -48,6 +48,7 @@ void Input::keyboard_button_callback(GLFWwindow* window, int key, int scancode, 
 	if (key == GLFW_KEY_ENTER && action == GLFW_PRESS)
 	{
 		std::cerr << "TODO: fermer la forme " << std::endl;
+		//GLDrawArray line et plus point
 	}
 	if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
 	{

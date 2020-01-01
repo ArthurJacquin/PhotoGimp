@@ -1,6 +1,3 @@
-
-// GLEW_STATIC force le linkage statique
-// c-a-d que le code de glew est directement injecte dans l'executable
 #define GLEW_STATIC
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
@@ -8,7 +5,7 @@
 
 #if defined(_WIN32) && defined(_MSC_VER)
 #pragma comment(lib, "glfw3dll.lib")
-#pragma comment(lib, "glew32s.lib")			// glew32.lib si pas GLEW_STATIC
+#pragma comment(lib, "glew32s.lib")	
 #pragma comment(lib, "opengl32.lib")
 #elif defined(__APPLE__)
 #elif defined(__linux__)
@@ -23,7 +20,6 @@
 GLShader BasicShader;
 GLuint VAO;
 GLuint VBO;
-GLuint IBO;
 Input input;
 std::vector<Vertex> vertices;
 
@@ -52,21 +48,6 @@ bool Initialise() {
 	GLuint64 BasicProgram = BasicShader.GetProgram();
 	glUseProgram(BasicProgram);
 
-	//Vertex array
-	const Vertex triangle[] = {
-		Vertex(-0.5f, -0.5f, 1.f, 0.f, 0.f),
-		Vertex(-0.5f, +0.5f, 0.f, 1.f, 0.f),
-		Vertex(+0.5f, +0.5f, 0.f, 0.f, 1.f),
-		Vertex(+0.5f, -0.5f, 1.f, 0.f, 0.f)
-	};
-
-	//Indices array
-	const unsigned short indices[] = {
-		0, 1, 2,
-		0, 2, 3
-	};
-
-
 #ifdef WIN32 
 	wglSwapIntervalEXT(1);
 #endif 
@@ -85,33 +66,24 @@ void updateBuffer()
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(Vertex) * vertices.size(), vertices.data(), GL_STATIC_DRAW);
 
-	//Création IBO
-	/*glGenBuffers(1, &IBO);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, IBO);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned short) * 3 * 2, indices, GL_STATIC_DRAW);
-	*/
 	//Position
 	int loc_position = glGetAttribLocation(BasicShader.GetProgram(), "a_position");
-	glVertexAttribPointer(loc_position, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), nullptr);
+	glVertexAttribPointer(loc_position, 2, GL_DOUBLE, GL_FALSE, sizeof(Vertex), 0);
 	glEnableVertexAttribArray(loc_position);
-
+	/*
 	//Color
 	int loc_color = glGetAttribLocation(BasicShader.GetProgram(), "a_color");
 	glVertexAttribPointer(loc_color, 3, GL_FLOAT, false, sizeof(Vertex), (void*)offsetof(Vertex, r));
 	glEnableVertexAttribArray(loc_color);
-	
+	*/
 	//Désactivation des buffers
 	glBindVertexArray(0);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
-
-
 }
 
 void Terminate() 
 {
 	BasicShader.Destroy();
-	glDeleteBuffers(1, &IBO);
 	glDeleteBuffers(1, &VBO);
 	glDeleteVertexArrays(1, &VAO);
 }
@@ -130,8 +102,7 @@ void Display(GLFWwindow* window)
 
 	//Active VAO -> Render -> reset VAO
 	glBindVertexArray(VAO);
-
-	//glDrawElements(GL_TRIANGLES, vertices.size(), GL_UNSIGNED_SHORT, nullptr);
+	glEnable(GL_PROGRAM_POINT_SIZE);
 	glDrawArrays(GL_POINTS, 0, vertices.size());
 
 	glBindVertexArray(0);
@@ -146,7 +117,7 @@ int main(void)
 		return -1;
 
 	/* Create a windowed mode window and its OpenGL context */
-	window = glfwCreateWindow(640, 480, "Hello World", NULL, NULL);
+	window = glfwCreateWindow(640, 480, "PhotoGimp", NULL, NULL);
 	if (!window)
 	{
 		glfwTerminate();
@@ -172,6 +143,7 @@ int main(void)
 		{
 			updateBuffer();
 		}
+
 		/* Render here */
 		Display(window);
 
@@ -179,11 +151,11 @@ int main(void)
 		glfwSwapBuffers(window);
 		/* Poll for and process events */
 		glfwPollEvents();
-
 		/*
 		for (std::vector<Vertex>::const_iterator i = vertices.begin(); i != vertices.end(); ++i)
-			std::cout << *i  << std::endl;*/
-
+			std::cout << *i  << std::endl;
+		*/
+		//std::cout << sizeof(Vertex) * vertices.size() << std::endl;
 	}
 
 	// ne pas oublier de liberer la memoire etc...
