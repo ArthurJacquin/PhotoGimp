@@ -7,6 +7,6 @@ Vertex::Vertex(double x, double y)//, float r, float g, float b)
 
 std::ostream& operator<<(std::ostream& os, const Vertex& obj)
 {
-	os << "(" << obj.x << "," << obj.y;// << "," << obj.r << "," << obj.g << "," << obj.b << ")" << std::endl;
+	os << "(" << obj.x << "," << obj.y << ")" << std::endl;// << "," << obj.r << "," << obj.g << "," << obj.b << ")" << std::endl;
 	return os;
 }
