@@ -16,12 +16,14 @@ void Input::mouse_button_callback(GLFWwindow * window, int button, int action, i
 	{
 		double xpos, ypos;
 		glfwGetCursorPos(window, &xpos, &ypos);
+		if (xpos > 100)
+		{
+			Vertex newPoint = Vertex(-1.0f + 2 * xpos / width, 1.0f - 2 * ypos / height);
+			vertices.push_back(newPoint);
+			std::cerr << "Cursor Position at :" << newPoint.x << " , " << newPoint.y << std::endl;
+			std::cerr << "vertices size:" << vertices.size() << std::endl;
+		}
 
-		Vertex newPoint = Vertex(-1.0f + 2 * xpos / width, 1.0f - 2 * ypos / height);
-		vertices.push_back(newPoint);
-
-		std::cerr << "Cursor Position at :" << newPoint.x << " , " << newPoint.y << std::endl;
-		std::cerr << "vertices size:" << vertices.size() << std::endl;
 	}
 	if (button == GLFW_MOUSE_BUTTON_RIGHT && action == GLFW_PRESS)
 	{

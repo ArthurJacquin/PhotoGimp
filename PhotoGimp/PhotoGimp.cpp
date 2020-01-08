@@ -23,7 +23,8 @@ GLuint VBO;
 Input input;
 std::vector<Vertex> vertices;
 
-int width, height = 512;
+int width = 1024;
+int height = 512;
 bool closeFigure = false;
 
 bool Initialise() {
@@ -102,6 +103,7 @@ void Display(GLFWwindow* window)
 
 	//Active VAO -> Render -> reset VAO
 	glBindVertexArray(VAO);
+
 	if (closeFigure == true)
 	{
 		glLineWidth(5.f);
@@ -125,7 +127,7 @@ int main(void)
 		return -1;
 
 	/* Create a windowed mode window and its OpenGL context */
-	window = glfwCreateWindow(640, 480, "PhotoGimp", NULL, NULL);
+	window = glfwCreateWindow(1024, 512, "PhotoGimp", NULL, NULL);
 	if (!window)
 	{
 		glfwTerminate();
