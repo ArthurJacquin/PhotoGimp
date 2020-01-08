@@ -7,9 +7,9 @@
 
 extern int width, height;
 extern std::vector<Vertex> vertices;
+extern std::vector<int> shapesSizes;
 extern std::vector<Vertex> tabMenuFormeVertices;
 extern std::vector<Vertex> tabMenuFenetreVertices;
-extern bool closeFigure;
 extern UI button;
 
 bool canCreatePoint = false;
@@ -17,21 +17,9 @@ bool canCreatePoint = false;
 bool clickMenuForme = false;
 bool clickMenuFenetre = false;
 bool clickMenuRemplissage = false;
-int start = 0;
 
 std::vector<float> color = { 1.f, 1.f, 1.f };
 
-
-void SetEndAndStartDraw(int start)
-{
-	std::cerr << "start before : " << start << std::endl;
-
-	if (clickMenuFenetre == true)
-	{
-		start = vertices.size();
-		std::cerr << "start after : " << start << std::endl;
-	}
-}
 void Input::mouse_button_callback(GLFWwindow * window, int button, int action, int mods)
 { 
 	if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS)
@@ -44,7 +32,6 @@ void Input::mouse_button_callback(GLFWwindow * window, int button, int action, i
 			if (ypos <= height/3)
 			{
 				clickMenuForme = true;
-				closeFigure = false;
 				canCreatePoint = true;
 
 				std::cerr << " I clicked on tabMenuForme" << std::endl;
@@ -52,7 +39,6 @@ void Input::mouse_button_callback(GLFWwindow * window, int button, int action, i
 			else if (ypos > height / 3 && ypos <= height - height / 3)
 			{
 				canCreatePoint = true;
-				closeFigure = false;
 
 				clickMenuForme = false;
 				clickMenuFenetre = true;
@@ -105,15 +91,15 @@ void Input::cursorEnterCallback(GLFWwindow* window, int entered)
 
 void Input::keyboard_button_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
 {
-	if (key == GLFW_KEY_ENTER && action == GLFW_PRESS)
+	if (key == GLFW_KEY_ENTER && action == GLFW_PRESS && canCreatePoint)
 	{
-		closeFigure = true;
 		canCreatePoint = false;
-		tabMenuFormeVertices = vertices;
-		start = vertices.size();
 
-		std::cerr << "start after : " << start << std::endl;
-		//SetEndAndStartDraw(start);
+		int sumVerticesInShapes = 0;
+		for (int i = 0; i < shapesSizes.size(); ++i)
+			sumVerticesInShapes += shapesSizes[i];
+
+		shapesSizes.push_back(vertices.size() - sumVerticesInShapes);
 	}
 	if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
 	{

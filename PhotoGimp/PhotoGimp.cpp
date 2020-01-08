@@ -23,14 +23,11 @@ GLuint VBO;
 Input input;
 //tableau de positions du tableau en cours
 std::vector<Vertex> vertices;
-std::vector<Vertex> tabMenuFormeVertices;
+std::vector<int> shapesSizes;
 std::vector<Vertex> tabMenuFenetreVertices;
 
 int width = 1024;
 int height = 512;
-bool closeFigure = false;
-
-extern int start;
 
 bool Initialise() {
 
@@ -109,17 +106,16 @@ void Display(GLFWwindow* window)
 	//Active VAO -> Render -> reset VAO
 	glBindVertexArray(VAO);
 
-	if (closeFigure == true)
+	glLineWidth(5.f);
+	int currentId = 0;
+	for (int i = 0; i < shapesSizes.size(); ++i)
 	{
-		glLineWidth(5.f);
-		glDrawArrays(GL_LINE_LOOP, 0, vertices.size());
+		glDrawArrays(GL_LINE_LOOP, currentId, shapesSizes[i]);
+		currentId += shapesSizes[i];
 	}
-	else
-	{
-		glEnable(GL_PROGRAM_POINT_SIZE);
-		glDrawArrays(GL_POINTS, start, vertices.size());
-		std::cerr << start << std::endl;
-	}
+
+	glEnable(GL_PROGRAM_POINT_SIZE);
+	glDrawArrays(GL_POINTS, currentId, vertices.size() - currentId);
 
 	glBindVertexArray(0);
 }
