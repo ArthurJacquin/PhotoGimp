@@ -21,11 +21,16 @@ GLShader BasicShader;
 GLuint VAO;
 GLuint VBO;
 Input input;
+//tableau de positions du tableau en cours
 std::vector<Vertex> vertices;
+std::vector<Vertex> tabMenuFormeVertices;
+std::vector<Vertex> tabMenuFenetreVertices;
 
 int width = 1024;
 int height = 512;
 bool closeFigure = false;
+
+extern int start;
 
 bool Initialise() {
 
@@ -61,22 +66,22 @@ void updateBuffer()
 	//Création VAO
 	glGenVertexArrays(1, &VAO);
 	glBindVertexArray(VAO);
-
+	
 	//Création VBO
 	glGenBuffers(1, &VBO);
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(Vertex) * vertices.size(), vertices.data(), GL_STATIC_DRAW);
-
+	
 	//Position
 	int loc_position = glGetAttribLocation(BasicShader.GetProgram(), "a_position");
 	glVertexAttribPointer(loc_position, 2, GL_DOUBLE, GL_FALSE, sizeof(Vertex), 0);
 	glEnableVertexAttribArray(loc_position);
-	/*
+	
 	//Color
 	int loc_color = glGetAttribLocation(BasicShader.GetProgram(), "a_color");
 	glVertexAttribPointer(loc_color, 3, GL_FLOAT, false, sizeof(Vertex), (void*)offsetof(Vertex, r));
 	glEnableVertexAttribArray(loc_color);
-	*/
+	
 	//Désactivation des buffers
 	glBindVertexArray(0);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -112,7 +117,8 @@ void Display(GLFWwindow* window)
 	else
 	{
 		glEnable(GL_PROGRAM_POINT_SIZE);
-		glDrawArrays(GL_POINTS, 0, vertices.size());
+		glDrawArrays(GL_POINTS, start, vertices.size());
+		std::cerr << start << std::endl;
 	}
 
 	glBindVertexArray(0);
@@ -146,6 +152,7 @@ int main(void)
 	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
 	glfwGetFramebufferSize(window, &width, &height);
 
+
 	/* Loop until the user closes the window */
 	while (!glfwWindowShouldClose(window))
 	{
@@ -163,7 +170,6 @@ int main(void)
 		glfwPollEvents();
 		/*
 		for (std::vector<Vertex>::const_iterator i = vertices.begin(); i != vertices.end(); ++i)
-			std::cout << *i  << std::endl;
 		*/
 		//std::cout << sizeof(Vertex) * vertices.size() << std::endl;
 	}
