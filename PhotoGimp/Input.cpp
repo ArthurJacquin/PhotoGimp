@@ -8,6 +8,7 @@
 
 extern int width, height;
 extern std::vector<Vertex> vertices;
+extern bool closeFigure;
 
 void Input::mouse_button_callback(GLFWwindow * window, int button, int action, int mods)
 { 
@@ -49,7 +50,7 @@ void Input::keyboard_button_callback(GLFWwindow* window, int key, int scancode, 
 {
 	if (key == GLFW_KEY_ENTER && action == GLFW_PRESS)
 	{
-		std::cerr << "TODO: fermer la forme " << std::endl;
+		closeFigure = true;
 	}
 	if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
 	{

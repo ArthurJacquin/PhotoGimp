@@ -24,7 +24,7 @@ Input input;
 std::vector<Vertex> vertices;
 
 int width, height = 512;
-
+bool closeFigure = false;
 
 bool Initialise() {
 
@@ -102,8 +102,16 @@ void Display(GLFWwindow* window)
 
 	//Active VAO -> Render -> reset VAO
 	glBindVertexArray(VAO);
-	glEnable(GL_PROGRAM_POINT_SIZE);
-	glDrawArrays(GL_POINTS, 0, vertices.size());
+	if (closeFigure == true)
+	{
+		glLineWidth(5.f);
+		glDrawArrays(GL_LINE_LOOP, 0, vertices.size());
+	}
+	else
+	{
+		glEnable(GL_PROGRAM_POINT_SIZE);
+		glDrawArrays(GL_POINTS, 0, vertices.size());
+	}
 
 	glBindVertexArray(0);
 }
