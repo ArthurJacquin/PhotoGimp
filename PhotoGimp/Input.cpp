@@ -6,6 +6,7 @@
 #pragma once
 #include <vector>
 
+extern int width, height;
 extern std::vector<Vertex> vertices;
 
 void Input::mouse_button_callback(GLFWwindow * window, int button, int action, int mods)
@@ -14,10 +15,11 @@ void Input::mouse_button_callback(GLFWwindow * window, int button, int action, i
 	{
 		double xpos, ypos;
 		glfwGetCursorPos(window, &xpos, &ypos);
-		std::cerr << "Cursor Position at :" << xpos << " , " << ypos << std::endl;
 
-		Vertex newPoint = Vertex(xpos, ypos);
+		Vertex newPoint = Vertex(-1.0f + 2 * xpos / width, 1.0f - 2 * ypos / height);
 		vertices.push_back(newPoint);
+
+		std::cerr << "Cursor Position at :" << newPoint.x << " , " << newPoint.y << std::endl;
 		std::cerr << "vertices size:" << vertices.size() << std::endl;
 	}
 	if (button == GLFW_MOUSE_BUTTON_RIGHT && action == GLFW_PRESS)
@@ -48,7 +50,6 @@ void Input::keyboard_button_callback(GLFWwindow* window, int key, int scancode, 
 	if (key == GLFW_KEY_ENTER && action == GLFW_PRESS)
 	{
 		std::cerr << "TODO: fermer la forme " << std::endl;
-		//GLDrawArray line et plus point
 	}
 	if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
 	{

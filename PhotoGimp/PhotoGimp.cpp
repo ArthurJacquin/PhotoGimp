@@ -23,7 +23,7 @@ GLuint VBO;
 Input input;
 std::vector<Vertex> vertices;
 
-int width, height;
+int width, height = 512;
 
 
 bool Initialise() {
