@@ -23,7 +23,8 @@ GLuint VBO;
 Input input;
 //tableau de positions du tableau en cours
 std::vector<Vertex> vertices;
-std::vector<int> shapesSizes;
+std::vector<int> shapesSizes; 
+std::vector<Vertex> tabMenuFormeVertices;
 std::vector<Vertex> tabMenuFenetreVertices;
 
 int width = 1024;
@@ -148,6 +149,15 @@ int main(void)
 	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
 	glfwGetFramebufferSize(window, &width, &height);
 
+	//---------------------------------------TEST FENETRAGE--------------------------------------------
+	/*Vertex FormePoint = {0.f, 0.f, 0.f, 0.f, 0.f};
+	Vertex FormePointNext = {2.f, 2.f, 0.f, 0.f, 0.f};
+	Vertex FenetrePoint = {0.f, 2.f, 0.f, 0.f, 0.f};
+	Vertex FenetreNextPoint = {2.f, 0.f, 0.f, 0.f, 0.f};
+
+	intersection(FormePoint, FormePointNext, FenetrePoint, FenetreNextPoint);
+
+	//---------------------------------------FIN TEST FENETRAGE----------------------------------------
 
 	/* Loop until the user closes the window */
 	while (!glfwWindowShouldClose(window))
@@ -176,3 +186,4 @@ int main(void)
 	glfwTerminate();
 	return 0;
 }
+

@@ -156,6 +156,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\common\GLShader.cpp" />
+    <ClCompile Include="Fenetrage.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="PhotoGimp.cpp" />
     <ClCompile Include="stdafx.cpp">

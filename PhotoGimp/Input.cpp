@@ -33,7 +33,9 @@ void Input::mouse_button_callback(GLFWwindow * window, int button, int action, i
 			{
 				clickMenuForme = true;
 				canCreatePoint = true;
+				clickMenuFenetre = false;
 
+				color = { 1.0, 1.0, 1.0 };
 				std::cerr << " I clicked on tabMenuForme" << std::endl;
 			}
 			else if (ypos > height / 3 && ypos <= height - height / 3)
@@ -60,13 +62,20 @@ void Input::mouse_button_callback(GLFWwindow * window, int button, int action, i
 			{
 				Vertex newPoint = Vertex(-1.0f + 2 * xpos / width, 1.0f - 2 * ypos / height, color[0], color[1], color[2]);
 				vertices.push_back(newPoint);
-				//std::cerr << "Cursor Position at :" << newPoint.x << " , " << newPoint.y << std::endl;
-				//std::cerr << "vertices size:" << vertices.size() << std::endl;
+
+				if (clickMenuForme == true)
+				{
+					tabMenuFormeVertices.push_back(newPoint);
+				}
+				else if (clickMenuFenetre == true)
+				{
+					tabMenuFenetreVertices.push_back(newPoint);
+				}
 			}
 		}
 
 	}
-	if (button == GLFW_MOUSE_BUTTON_RIGHT && action == GLFW_PRESS)
+	if (button == GLFW_KEY_BACKSPACE && action == GLFW_PRESS)
 	{
 		if (vertices.empty() == false)
 		{
@@ -104,6 +113,7 @@ void Input::keyboard_button_callback(GLFWwindow* window, int key, int scancode, 
 	if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
 	{
 		vertices.clear();
+		shapesSizes.clear();
 		//std::cerr << "clear vertices size : " << vertices.size() << std::endl;
 	}
 }
