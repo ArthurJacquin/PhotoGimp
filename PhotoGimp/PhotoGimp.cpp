@@ -96,8 +96,8 @@ void Display(GLFWwindow* window)
 {
 	glfwGetWindowSize(window, &width, &height);
 
-	glClearColor(0.f, 0.f, 0.f, 0.f);
-	glClear(GL_COLOR_BUFFER_BIT);
+	//glClearColor(0.f, 0.f, 0.f, 0.f);
+	//glClear(GL_COLOR_BUFFER_BIT);
 
 	// Desactive le "scissoring"
 	glDisable(GL_SCISSOR_TEST);
@@ -120,6 +120,7 @@ void Display(GLFWwindow* window)
 
 	glBindVertexArray(0);
 }
+
 
 int main(void)
 {
@@ -148,16 +149,6 @@ int main(void)
 	glfwSetKeyCallback(window, &input.keyboard_button_callback);
 	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
 	glfwGetFramebufferSize(window, &width, &height);
-
-	//---------------------------------------TEST FENETRAGE--------------------------------------------
-	/*Vertex FormePoint = {0.f, 0.f, 0.f, 0.f, 0.f};
-	Vertex FormePointNext = {2.f, 2.f, 0.f, 0.f, 0.f};
-	Vertex FenetrePoint = {0.f, 2.f, 0.f, 0.f, 0.f};
-	Vertex FenetreNextPoint = {2.f, 0.f, 0.f, 0.f, 0.f};
-
-	intersection(FormePoint, FormePointNext, FenetrePoint, FenetreNextPoint);
-
-	//---------------------------------------FIN TEST FENETRAGE----------------------------------------
 
 	/* Loop until the user closes the window */
 	while (!glfwWindowShouldClose(window))
