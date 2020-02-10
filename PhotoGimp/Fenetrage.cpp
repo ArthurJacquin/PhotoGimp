@@ -44,7 +44,7 @@ bool visible(Vertex PointToTest, Vertex FenetrePoint, Vertex FenetreNextPoint)
 	float leftSide = ((FenetreNextPoint.y - FenetrePoint.y) * PointToTest.x + (FenetrePoint.x - FenetreNextPoint.x)) * PointToTest.y
 		+ ((FenetreNextPoint.x * FenetrePoint.y) - (FenetreNextPoint.y * FenetrePoint.x));
 
-	if (leftSide < 0)
+	if (leftSide > 0)
 	{
 		return true;
 	}
@@ -57,25 +57,26 @@ bool visible(Vertex PointToTest, Vertex FenetrePoint, Vertex FenetreNextPoint)
 //REMARQUE : Ps est la liste des vertex tabMenuFormeVertices
 std::vector<Vertex> Fenetrage(std::vector<Vertex> PL_Forme, std::vector<Vertex> PW_Fenetre)
 {
-	PL_Forme.push_back(PL_Forme[0]);
 	PW_Fenetre.push_back(PW_Fenetre[0]);
 
-	int N2 = 0;
 	int N1 = PL_Forme.size();
+	int N3 = PW_Fenetre.size();
+	int N2 = 0;
+	
 	Vertex S = { 0.0, 0.0, 0.0, 1.0, 0.0 }; 
 	Vertex F = { 0.0, 0.0, 0.0, 1.0, 0.0 };
 	Vertex I = { 0.0, 0.0, 0.0, 1.0, 0.0 };
 
 	std::vector<Vertex> PS;
-
-	for (int i = 1; i < PW_Fenetre.size() - 1; ++i )
+	
+	for (int i = 0; i < N3 - 1; ++i)
 	{
 		N2 = 0;
 		PS.clear();
 
-		for (int j = 1; j < PL_Forme.size(); ++j )
+		for (int j = 0; j < N1; ++j)
 		{
-			if (j == 1)
+			if (j == 0)
 			{
 				F = PL_Forme[j];
 			}
@@ -97,7 +98,6 @@ std::vector<Vertex> Fenetrage(std::vector<Vertex> PL_Forme, std::vector<Vertex> 
 				N2++;
 			}
 		}
-
 		if (N2 > 0)
 		{
 			if (coupe(S, F, PW_Fenetre[i], PW_Fenetre[i + 1]))
