@@ -149,6 +149,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\common\GLShader.h" />
+    <ClInclude Include="Color.h" />
     <ClInclude Include="Fenetrage.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="stdafx.h" />
@@ -157,6 +158,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\common\GLShader.cpp" />
+    <ClCompile Include="Color.cpp" />
     <ClCompile Include="Fenetrage.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="PhotoGimp.cpp" />
