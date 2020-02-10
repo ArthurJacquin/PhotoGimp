@@ -5,29 +5,43 @@
 
 Vertex intersection(Vertex FormePoint, Vertex FormePointNext, Vertex FenetrePoint, Vertex FenetreNextPoint)
 {
-	Vertex Pa = { FormePoint.x - FormePointNext.x, FormePoint.y - FormePointNext.y, 1.f, 1.f, 1.f };
-	Vertex Pb = { FenetrePoint.x - FenetreNextPoint.x, FenetrePoint.y - FenetreNextPoint.y, 1.f, 0.f, 0.f };
+	Vertex Pa = { FormePointNext.x - FormePoint.x, FormePointNext.y - FormePoint.y, 1.f, 1.f, 1.f };
+	Vertex Pb = { FenetreNextPoint.x - FenetrePoint.x, FenetreNextPoint.y - FenetrePoint.y, 1.f, 0.f, 0.f };
 	Vertex IntersectionPoint = { 0.f, 0.f, 0.f, 1.f, 0.f };
 
-	float denom = (Pa.x * Pb.y) - (Pa.y * Pb.x);
+	float denom = ((Pa.y * Pb.x) - (Pb.x * Pa.y));
 
-	float equationx = (FormePoint.x * FormePointNext.y) - (FormePoint.y * FormePointNext.x);
-	float equationy = (FenetrePoint.x * FenetreNextPoint.y) - (FenetrePoint.y * FenetreNextPoint.x);
+	float equationx = ((FenetreNextPoint.x - FenetrePoint.x) * (FormePoint.y - FenetrePoint.y))
+					- ((FenetreNextPoint.y - FenetrePoint.y) * (FormePoint.x - FenetrePoint.x));
+	float equationy = ((FormePointNext.x - FormePoint.x) * (FormePoint.y - FenetrePoint.y))
+					- ((FormePointNext.y - FormePoint.y) * (FormePoint.x - FenetrePoint.x));
 
-	IntersectionPoint.x = (equationx * Pb.x - equationy * Pa.x) * 1 / denom;
-	IntersectionPoint.y = (equationx * Pb.y - equationy * Pa.y) * 1 / denom;
+	float ua = equationx / denom;
+	float ub = equationy / denom;
+
+	IntersectionPoint.x = FormePoint.x + ua * (FormePointNext.x - FormePoint.x);
+	IntersectionPoint.y = FormePoint.y + ub * (FormePointNext.y - FormePoint.y);
 
 	return IntersectionPoint;
 }
 
-bool coupe(Vertex PointToTest, Vertex FormePointNext, Vertex FenetrePoint, Vertex FenetreNextPoint)
+bool coupe(Vertex FormePoint, Vertex FormePointNext, Vertex FenetrePoint, Vertex FenetreNextPoint)
 {
-	Vertex Pa = { PointToTest.x - FormePointNext.x, PointToTest.y - FormePointNext.y, 1.f, 1.f, 1.f };
-	Vertex Pb = { FenetrePoint.x - FenetreNextPoint.x, FenetrePoint.y - FenetreNextPoint.y, 1.f, 0.f, 0.f };
+	Vertex Pa = { FormePointNext.x - FormePoint.x, FormePointNext.y - FormePoint.y, 1.f, 1.f, 1.f };
+	Vertex Pb = { FenetreNextPoint.x - FenetrePoint.x, FenetreNextPoint.y - FenetrePoint.y, 1.f, 0.f, 0.f };
+	Vertex IntersectionPoint = { 0.f, 0.f, 0.f, 1.f, 0.f };
 
-	float denom = (Pa.x * Pb.y) - (Pa.y * Pb.x);
+	float denom = ((Pa.y * Pb.x) - (Pb.x * Pa.y));
 
-	if (denom == 0.0)
+	float equationx = ((FenetreNextPoint.x - FenetrePoint.x) * (FormePoint.y - FenetrePoint.y))
+		- ((FenetreNextPoint.y - FenetrePoint.y) * (FormePoint.x - FenetrePoint.x));
+	float equationy = ((FormePointNext.x - FormePoint.x) * (FormePoint.y - FenetrePoint.y))
+		- ((FormePointNext.y - FormePoint.y) * (FormePoint.x - FenetrePoint.x));
+
+	float ua = equationx / denom;
+	float ub = equationy / denom;
+
+	if (ua >= 0.f && ua <= 1.f && ub >= 0.f && ub<= 1.0f && denom != 0.f)
 	{
 		return false;
 	}
@@ -80,6 +94,7 @@ std::vector<Vertex> Fenetrage(std::vector<Vertex> PL_Forme, std::vector<Vertex> 
 				if (coupe(S, PL_Forme[j], PW_Fenetre[i], PW_Fenetre[i + 1]))
 				{
 					I = intersection(S, PL_Forme[j], PW_Fenetre[i], PW_Fenetre[i + 1]);
+					std::cerr << "intersection entre :" << S << "-> " << PL_Forme[j] << "et " << PW_Fenetre[i] << "-> " << PW_Fenetre[i + 1] << "= " << I << std::endl;
 					PS.push_back(I);
 					N2++;
 				}
@@ -98,6 +113,7 @@ std::vector<Vertex> Fenetrage(std::vector<Vertex> PL_Forme, std::vector<Vertex> 
 			if (coupe(S, F, PW_Fenetre[i], PW_Fenetre[i + 1]))
 			{
 				I = intersection(S, F, PW_Fenetre[i], PW_Fenetre[i + 1]);
+				std::cerr << "intersection entre :" << S << "-> " << F << "et " << PW_Fenetre[i] << "-> " << PW_Fenetre[i + 1] << "= " << I << std::endl;
 				PS.push_back(I);
 				N2++;
 			}
@@ -106,5 +122,6 @@ std::vector<Vertex> Fenetrage(std::vector<Vertex> PL_Forme, std::vector<Vertex> 
 			N1 = N2;
 		}
 	}
+
 	return PL_Forme;
 }

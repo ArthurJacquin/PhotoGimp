@@ -67,10 +67,13 @@ void Input::mouse_button_callback(GLFWwindow * window, int button, int action, i
 				if (clickMenuForme == true)
 				{
 					tabMenuFormeVertices.push_back(newPoint);
+
+					std::cerr << "Point Forme : " << newPoint << std::endl;
 				}
 				else if (clickMenuFenetre == true)
 				{
 					tabMenuFenetreVertices.push_back(newPoint);
+					std::cerr << "Point Vertices : " << newPoint << std::endl;
 				}
 			}
 		}
@@ -117,19 +120,17 @@ void Input::keyboard_button_callback(GLFWwindow* window, int key, int scancode, 
 		shapesSizes.clear();
 		tabMenuFormeVertices.clear();
 		tabMenuFenetreVertices.clear();
-		//std::cerr << "clear vertices size : " << vertices.size() << std::endl;
+		std::cerr << "clear vertices size : " << vertices.size() << std::endl;
 	}
 	if (key == GLFW_KEY_F && action == GLFW_PRESS)
 	{
 		std::cerr << "Press F To pay respect" << std::endl;
-		/*for (int i = 0; i < shapesSizes.size(); ++i)
-		{
-		
-		}*/
+
 		vertices.clear();
 		vertices = Fenetrage(tabMenuFormeVertices, tabMenuFenetreVertices);
 		shapesSizes.clear();
 		shapesSizes.push_back(vertices.size());
+
 		for(int i = 0; i < vertices.size(); i++)
 			std::cerr << vertices[i] << std::endl;
 	}
