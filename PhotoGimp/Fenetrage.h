@@ -6,3 +6,4 @@ Vertex intersection(Vertex FormePoint, Vertex FormePointNext, Vertex FenetrePoin
 bool coupe(Vertex PointToTest, Vertex FormePointNext, Vertex FenetrePoint, Vertex FenetreNextPoint);
 bool visible(Vertex PointToTest, Vertex FenetrePoint, Vertex FenetreNextPoint);
 std::vector<Vertex> Fenetrage(std::vector<Vertex> PL_Forme, std::vector<Vertex> PW_Fenetre);
+bool CheckIfClockwise(std::vector<Vertex> v);

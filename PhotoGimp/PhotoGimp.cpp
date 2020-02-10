@@ -27,7 +27,10 @@
 #include "imgui_widgets.cpp"
 #include "imgui_demo.cpp"
 
+#include "Color.h"
+
 const char* glsl_version = "#version 150";
+
 //Variables globales
 GLShader BasicShader;
 GLuint VAO;
@@ -38,6 +41,14 @@ std::vector<Vertex> vertices;
 std::vector<int> shapesSizes; 
 std::vector<Vertex> tabMenuFormeVertices;
 std::vector<Vertex> tabMenuFenetreVertices;
+
+//variables pour gui
+Color choosedColor(1.f, 1.f, 1.f);
+bool clickMenuForme = false;
+bool clickMenuFenetre = false;
+bool clickMenuRemplissage = false;
+bool clickDelete = false;
+bool clickMenuEnter = false;
 
 int width = 1024;
 int height = 512;
@@ -144,7 +155,7 @@ void InitialiseGUI(GLFWwindow* window)
 	ImGuiIO& io = ImGui::GetIO();
 	ImGui_ImplGlfw_InitForOpenGL(window, true);
 	ImGui_ImplOpenGL3_Init(glsl_version);
-	ImGui::StyleColorsDark();
+	ImGui::StyleColorsClassic();
 }
 
 void displayGUI()
@@ -155,8 +166,37 @@ void displayGUI()
 	ImGui::NewFrame();
 
 	// render your GUI
-	ImGui::Begin("PhotoGimp");
-	ImGui::Button("Hello!");
+	ImGui::Begin("PhotoGimp", 0, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse);
+
+	if (ImGui::Button("Trace une forme"))
+	{
+		clickMenuForme = true;
+	}
+
+	if (ImGui::Button("Trace une fenetre"))
+	{
+		clickMenuFenetre = true;
+	}
+
+	if (ImGui::Button("Decoupe !"))
+	{
+		clickMenuEnter = true;
+		input.decoupeForme();
+	}
+
+	static float color[4] = { 1.0f, 1.0f, 1.0f, 1.0f };
+	if (ImGui::ColorEdit3("Couleur", color))
+	{
+		std::cerr << color[0] << std::endl;
+		choosedColor = color;
+	}
+
+	if (ImGui::Button("Tout effacer"))
+	{
+		clickDelete = true;
+		input.deleteVertex();
+	}
+	//choosedColor = color;
 	ImGui::End();
 
 	// Render dear imgui into screen
@@ -204,9 +244,10 @@ int main(void)
 
 		/* Render here */
 		Display(window);
-		displayGUI();
 
-		/* Swap front and back buffers */
+		displayGUI();
+		input.waitForBool();
+
 		glfwSwapBuffers(window);
 		/* Poll for and process events */
 		glfwPollEvents();
