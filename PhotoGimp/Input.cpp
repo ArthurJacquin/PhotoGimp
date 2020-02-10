@@ -134,6 +134,21 @@ void Input::keyboard_button_callback(GLFWwindow* window, int key, int scancode, 
 		for(int i = 0; i < vertices.size(); i++)
 			std::cerr << vertices[i] << std::endl;
 	}
+
+	if (key == GLFW_KEY_T && action == GLFW_PRESS)
+	{
+		Vertex v = intersection(vertices[0], vertices[1], vertices[2], vertices[3]);
+		vertices.push_back(v);
+	}
+
+	if (key == GLFW_KEY_C && action == GLFW_PRESS)
+	{
+		/*Vertex a(0, 0, 1, 1, 1);
+		Vertex b(0, 1, 1, 1, 1);
+		Vertex c(1, 0, 1, 1, 1);
+		Vertex d(1, 1, 1, 1, 1);*/
+		std::cout << coupe(vertices[0], vertices[1], vertices[2], vertices[3]);
+	}
 }
 
 

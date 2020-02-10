@@ -3,50 +3,38 @@
 #include <vector>
 #include "Fenetrage.h"
 
-Vertex intersection(Vertex FormePoint, Vertex FormePointNext, Vertex FenetrePoint, Vertex FenetreNextPoint)
+Vertex intersection(Vertex P1, Vertex P2, Vertex P3, Vertex P4)
 {
-	Vertex Pa = { FormePointNext.x - FormePoint.x, FormePointNext.y - FormePoint.y, 1.f, 1.f, 1.f };
-	Vertex Pb = { FenetreNextPoint.x - FenetrePoint.x, FenetreNextPoint.y - FenetrePoint.y, 1.f, 0.f, 0.f };
 	Vertex IntersectionPoint = { 0.f, 0.f, 0.f, 1.f, 0.f };
 
-	float denom = ((Pa.y * Pb.x) - (Pb.x * Pa.y));
+	//Coefs directeurs
+	double mP1P2 = (P2.y - P1.y) / (P2.x - P1.x);
+	double mP3P4 = (P4.y - P3.y) / (P4.x - P3.x);
 
-	float equationx = ((FenetreNextPoint.x - FenetrePoint.x) * (FormePoint.y - FenetrePoint.y))
-					- ((FenetreNextPoint.y - FenetrePoint.y) * (FormePoint.x - FenetrePoint.x));
-	float equationy = ((FormePointNext.x - FormePoint.x) * (FormePoint.y - FenetrePoint.y))
-					- ((FormePointNext.y - FormePoint.y) * (FormePoint.x - FenetrePoint.x));
+	//Ordonnée à l'origine
+	double pP1P2 = P2.y - (mP1P2 * P2.x);
+	double pP3P4 = P4.y - (mP3P4 * P4.x);
+	
+	//
+	double Vco = -mP3P4 + mP1P2;
+	double Vcob = -pP3P4 + pP1P2;
 
-	float ua = equationx / denom;
-	float ub = equationy / denom;
+	float Xi = -(Vcob / Vco);
+	float Yi = mP3P4 * Xi + pP3P4;
 
-	IntersectionPoint.x = FormePoint.x + ua * (FormePointNext.x - FormePoint.x);
-	IntersectionPoint.y = FormePoint.y + ub * (FormePointNext.y - FormePoint.y);
+	IntersectionPoint.x = Xi;
+	IntersectionPoint.y = Yi;
 
 	return IntersectionPoint;
 }
 
-bool coupe(Vertex FormePoint, Vertex FormePointNext, Vertex FenetrePoint, Vertex FenetreNextPoint)
+bool coupe(Vertex P1, Vertex P2, Vertex P3, Vertex P4)
 {
-	Vertex Pa = { FormePointNext.x - FormePoint.x, FormePointNext.y - FormePoint.y, 1.f, 1.f, 1.f };
-	Vertex Pb = { FenetreNextPoint.x - FenetrePoint.x, FenetreNextPoint.y - FenetrePoint.y, 1.f, 0.f, 0.f };
-	Vertex IntersectionPoint = { 0.f, 0.f, 0.f, 1.f, 0.f };
+	//Coefs directeurs
+	double mP1P2 = (P2.y - P1.y) / (P2.x - P1.x);
+	double mP3P4 = (P4.y - P3.y) / (P4.x - P3.x);
 
-	float denom = ((Pa.y * Pb.x) - (Pb.x * Pa.y));
-
-	float equationx = ((FenetreNextPoint.x - FenetrePoint.x) * (FormePoint.y - FenetrePoint.y))
-		- ((FenetreNextPoint.y - FenetrePoint.y) * (FormePoint.x - FenetrePoint.x));
-	float equationy = ((FormePointNext.x - FormePoint.x) * (FormePoint.y - FenetrePoint.y))
-		- ((FormePointNext.y - FormePoint.y) * (FormePoint.x - FenetrePoint.x));
-
-	float ua = equationx / denom;
-	float ub = equationy / denom;
-
-	if (ua >= 0.f && ua <= 1.f && ub >= 0.f && ub<= 1.0f && denom != 0.f)
-	{
-		return false;
-	}
-
-	return true;
+	return mP1P2 != mP3P4;
 }
 
 
@@ -67,9 +55,11 @@ bool visible(Vertex PointToTest, Vertex FenetrePoint, Vertex FenetreNextPoint)
 }
 
 //REMARQUE : Ps est la liste des vertex tabMenuFormeVertices
-
 std::vector<Vertex> Fenetrage(std::vector<Vertex> PL_Forme, std::vector<Vertex> PW_Fenetre)
 {
+	PL_Forme.push_back(PL_Forme[0]);
+	PW_Fenetre.push_back(PW_Fenetre[0]);
+
 	int N2 = 0;
 	int N1 = PL_Forme.size();
 	Vertex S = { 0.0, 0.0, 0.0, 1.0, 0.0 }; 
