@@ -27,7 +27,10 @@
 #include "imgui_widgets.cpp"
 #include "imgui_demo.cpp"
 
+#include "Color.h"
+
 const char* glsl_version = "#version 150";
+
 //Variables globales
 GLShader BasicShader;
 GLuint VAO;
@@ -38,6 +41,15 @@ std::vector<Vertex> vertices;
 std::vector<int> shapesSizes; 
 std::vector<Vertex> tabMenuFormeVertices;
 std::vector<Vertex> tabMenuFenetreVertices;
+
+//variables pour gui
+Color choosedColor(1.f, 1.f, 1.f);
+bool clickMenuForme = false;
+bool clickMenuFenetre = false;
+bool clickMenuRemplissage = false;
+bool clickDelete = false;
+bool clickMenuEnter = false;
+bool canCreatePoint = false;
 
 int width = 1024;
 int height = 512;
@@ -156,7 +168,35 @@ void displayGUI()
 
 	// render your GUI
 	ImGui::Begin("PhotoGimp");
-	ImGui::Button("Hello!");
+
+	if (ImGui::Button("Trace une forme"))
+	{
+		clickMenuForme = true;
+	}
+
+	if (ImGui::Button("Trace une fenetre"))
+	{
+		clickMenuFenetre = true;
+	}
+
+	if (ImGui::Button("Decoupe !"))
+	{
+		clickMenuEnter = true;
+	}
+
+	static float color[4] = { 1.0f, 1.0f, 1.0f, 1.0f };
+	if (ImGui::ColorEdit3("couleur", color))
+	{
+		std::cerr << color[0] << std::endl;
+		choosedColor = color;
+	}
+
+	if (ImGui::Button("[Dans GUI] Tout effacer"))
+	{
+		std::cerr << "je veux tout effacer mais il se passe rien. C'est normal lol" << std::endl;
+		clickDelete = true;
+	}
+	//choosedColor = color;
 	ImGui::End();
 
 	// Render dear imgui into screen
@@ -204,9 +244,11 @@ int main(void)
 
 		/* Render here */
 		Display(window);
-		displayGUI();
 
-		/* Swap front and back buffers */
+		displayGUI();
+		input.waitForBool();
+		std::cerr << canCreatePoint << std::endl;
+
 		glfwSwapBuffers(window);
 		/* Poll for and process events */
 		glfwPollEvents();
