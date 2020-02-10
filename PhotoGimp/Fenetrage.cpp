@@ -82,12 +82,15 @@ std::vector<Vertex> Fenetrage(std::vector<Vertex> PL_Forme, std::vector<Vertex> 
 			}
 			else
 			{
-				if (coupe(S, PL_Forme[j], PW_Fenetre[i], PW_Fenetre[i + 1]))
+				if (!visible(S, PW_Fenetre[i], PW_Fenetre[i + 1]) ^ !visible(PL_Forme[j], PW_Fenetre[i], PW_Fenetre[i + 1]))
 				{
-					I = intersection(S, PL_Forme[j], PW_Fenetre[i], PW_Fenetre[i + 1]);
-					std::cerr << "intersection entre :" << S << "-> " << PL_Forme[j] << "et " << PW_Fenetre[i] << "-> " << PW_Fenetre[i + 1] << "= " << I << std::endl;
-					PS.push_back(I);
-					N2++;
+					if (coupe(S, PL_Forme[j], PW_Fenetre[i], PW_Fenetre[i + 1]))
+					{
+						I = intersection(S, PL_Forme[j], PW_Fenetre[i], PW_Fenetre[i + 1]);
+						std::cerr << "intersection entre :" << S << "-> " << PL_Forme[j] << "et " << PW_Fenetre[i] << "-> " << PW_Fenetre[i + 1] << "= " << I << std::endl;
+						PS.push_back(I);
+						N2++;
+					}
 				}
 			}
 
@@ -100,12 +103,15 @@ std::vector<Vertex> Fenetrage(std::vector<Vertex> PL_Forme, std::vector<Vertex> 
 		}
 		if (N2 > 0)
 		{
-			if (coupe(S, F, PW_Fenetre[i], PW_Fenetre[i + 1]))
+			if (!visible(S, PW_Fenetre[i], PW_Fenetre[i + 1]) ^ !visible(F, PW_Fenetre[i], PW_Fenetre[i + 1]))
 			{
-				I = intersection(S, F, PW_Fenetre[i], PW_Fenetre[i + 1]);
-				std::cerr << "intersection entre :" << S << "-> " << F << "et " << PW_Fenetre[i] << "-> " << PW_Fenetre[i + 1] << "= " << I << std::endl;
-				PS.push_back(I);
-				N2++;
+				if (coupe(S, F, PW_Fenetre[i], PW_Fenetre[i + 1]))
+				{
+					I = intersection(S, F, PW_Fenetre[i], PW_Fenetre[i + 1]);
+					std::cerr << "intersection entre :" << S << "-> " << F << "et " << PW_Fenetre[i] << "-> " << PW_Fenetre[i + 1] << "= " << I << std::endl;
+					PS.push_back(I);
+					N2++;
+				}
 			}
 
 			PL_Forme = PS;
