@@ -16,6 +16,18 @@
 #include "Vertex.h"
 #include "Input.h"
 
+#include "imgui.h"
+#include "examples\\imgui_impl_opengl3.h"
+#include "examples\\imgui_impl_glfw.h"
+
+#include "imgui.cpp"
+#include "examples\\imgui_impl_glfw.cpp"
+#include "examples\\imgui_impl_opengl3.cpp"
+#include "imgui_draw.cpp"
+#include "imgui_widgets.cpp"
+#include "imgui_demo.cpp"
+
+const char* glsl_version = "#version 150";
 //Variables globales
 GLShader BasicShader;
 GLuint VAO;
@@ -51,10 +63,10 @@ bool Initialise() {
 	//Init Program
 	GLuint64 BasicProgram = BasicShader.GetProgram();
 	glUseProgram(BasicProgram);
-
+	/*
 #ifdef WIN32 
-	wglSwapIntervalEXT(1);
-#endif 
+	wglSwapIntervalEXT(1);*/
+//#endif 
 
 	return true;
 }
@@ -90,14 +102,18 @@ void Terminate()
 	BasicShader.Destroy();
 	glDeleteBuffers(1, &VBO);
 	glDeleteVertexArrays(1, &VAO);
+
+	ImGui_ImplOpenGL3_Shutdown();
+	ImGui_ImplGlfw_Shutdown();
+	ImGui::DestroyContext();
 }
 
 void Display(GLFWwindow* window)
 {
+
 	glfwGetWindowSize(window, &width, &height);
-	//TODO : REMETTRE CLEAR
-	//glClearColor(0.f, 0.f, 0.f, 0.f);
-	//glClear(GL_COLOR_BUFFER_BIT);
+	glClearColor(0.f, 0.f, 0.f, 0.f);
+	glClear(GL_COLOR_BUFFER_BIT);
 
 	// Desactive le "scissoring"
 	glDisable(GL_SCISSOR_TEST);
@@ -121,6 +137,32 @@ void Display(GLFWwindow* window)
 	glBindVertexArray(0);
 }
 
+void InitialiseGUI(GLFWwindow* window)
+{
+	IMGUI_CHECKVERSION();
+	ImGui::CreateContext();
+	ImGuiIO& io = ImGui::GetIO();
+	ImGui_ImplGlfw_InitForOpenGL(window, true);
+	ImGui_ImplOpenGL3_Init(glsl_version);
+	ImGui::StyleColorsDark();
+}
+
+void displayGUI()
+{
+	// feed inputs to dear imgui, start new frame
+	ImGui_ImplOpenGL3_NewFrame();
+	ImGui_ImplGlfw_NewFrame();
+	ImGui::NewFrame();
+
+	// render your GUI
+	ImGui::Begin("PhotoGimp");
+	ImGui::Button("Hello!");
+	ImGui::End();
+
+	// Render dear imgui into screen
+	ImGui::Render();
+	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+}
 
 int main(void)
 {
@@ -132,6 +174,8 @@ int main(void)
 
 	/* Create a windowed mode window and its OpenGL context */
 	window = glfwCreateWindow(1024, 512, "PhotoGimp", NULL, NULL);
+	InitialiseGUI(window);
+
 	if (!window)
 	{
 		glfwTerminate();
@@ -160,6 +204,7 @@ int main(void)
 
 		/* Render here */
 		Display(window);
+		displayGUI();
 
 		/* Swap front and back buffers */
 		glfwSwapBuffers(window);
@@ -169,6 +214,7 @@ int main(void)
 		for (std::vector<Vertex>::const_iterator i = vertices.begin(); i != vertices.end(); ++i)
 		*/
 		//std::cout << sizeof(Vertex) * vertices.size() << std::endl;
+
 	}
 
 	// ne pas oublier de liberer la memoire etc...
