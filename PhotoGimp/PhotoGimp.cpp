@@ -96,8 +96,8 @@ void Display(GLFWwindow* window)
 {
 	glfwGetWindowSize(window, &width, &height);
 	//TODO : REMETTRE CLEAR
-	//glClearColor(0.f, 0.f, 0.f, 0.f);
-	//glClear(GL_COLOR_BUFFER_BIT);
+	glClearColor(0.f, 0.f, 0.f, 0.f);
+	glClear(GL_COLOR_BUFFER_BIT);
 
 	// Desactive le "scissoring"
 	glDisable(GL_SCISSOR_TEST);
