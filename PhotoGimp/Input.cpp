@@ -6,6 +6,7 @@
 #include <vector>
 #include "Fenetrage.h"
 #include "Color.h"
+#include "imgui.h"
 
 extern int width, height;
 extern std::vector<Vertex> vertices;
@@ -14,7 +15,7 @@ extern std::vector<Vertex> tabMenuFormeVertices;
 extern std::vector<Vertex> tabMenuFenetreVertices;
 extern UI button;
 
-extern bool canCreatePoint;
+bool canCreatePoint = false;
 
 extern bool clickMenuForme;
 extern bool clickMenuFenetre;
@@ -73,29 +74,51 @@ void Input::waitForBool()
 	}
 }
 
+void Input::deleteVertex()
+{
+	vertices.clear();
+	shapesSizes.clear();
+	tabMenuFormeVertices.clear();
+	tabMenuFenetreVertices.clear();
+}
+
+void Input::decoupeForme()
+{
+	vertices.clear();
+	vertices = Fenetrage(tabMenuFormeVertices, tabMenuFenetreVertices);
+	shapesSizes.clear();
+	shapesSizes.push_back(vertices.size());
+
+	for (int i = 0; i < vertices.size(); i++)
+		std::cerr << vertices[i] << std::endl;
+}
+
 void Input::mouse_button_callback(GLFWwindow * window, int button, int action, int mods)
 {
 	if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS)
 	{
 		double xpos, ypos;
 		glfwGetCursorPos(window, &xpos, &ypos);
-
+		std::cerr << xpos << ypos << std::endl;
 		if (canCreatePoint == true)
 		{
-			Vertex newPoint = Vertex(-1.0f + 2 * xpos / width, 1.0f - 2 * ypos / height, choosedColor.x, choosedColor.y, choosedColor.z);
-			vertices.push_back(newPoint);
+			//if (xpos > 100 && ypos > 100)
+			//{
+				Vertex newPoint = Vertex(-1.0f + 2 * xpos / width, 1.0f - 2 * ypos / height, choosedColor.x, choosedColor.y, choosedColor.z);
+				vertices.push_back(newPoint);
 
-			if (clickMenuForme == true)
-			{
-				tabMenuFormeVertices.push_back(newPoint);
+				if (clickMenuForme == true)
+				{
+					tabMenuFormeVertices.push_back(newPoint);
 
-				std::cerr << "Point Forme : " << newPoint << std::endl;
-			}
-			else if (clickMenuFenetre == true)
-			{
-				tabMenuFenetreVertices.push_back(newPoint);
-				std::cerr << "Point Vertices : " << newPoint << std::endl;
-			}
+					std::cerr << "Point Forme : " << newPoint << std::endl;
+				}
+				else if (clickMenuFenetre == true)
+				{
+					tabMenuFenetreVertices.push_back(newPoint);
+					std::cerr << "Point Vertices : " << newPoint << std::endl;
+				}
+			//}
 		}
 	}
 
@@ -129,17 +152,18 @@ void Input::keyboard_button_callback(GLFWwindow* window, int key, int scancode, 
 			sumVerticesInShapes += shapesSizes[i];
 
 		shapesSizes.push_back(vertices.size() - sumVerticesInShapes);
+
 		canCreatePoint = false;
-		std::cerr << "j'ai appuye sur ENTER FUUUUCK" << std::endl;
+		clickMenuForme = false;
+		clickMenuFenetre = false;
+		clickMenuRemplissage = false;
+		clickMenuEnter = false;
+		clickDelete = false;
 	}
 
 	if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
 	{
-		vertices.clear();
-		shapesSizes.clear();
-		tabMenuFormeVertices.clear();
-		tabMenuFenetreVertices.clear();
-		std::cerr << "clear vertices size : " << vertices.size() << std::endl;
+		deleteVertex();
 	}
 
 	if (key == GLFW_KEY_F && action == GLFW_PRESS)

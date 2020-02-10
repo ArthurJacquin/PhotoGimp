@@ -49,7 +49,6 @@ bool clickMenuFenetre = false;
 bool clickMenuRemplissage = false;
 bool clickDelete = false;
 bool clickMenuEnter = false;
-bool canCreatePoint = false;
 
 int width = 1024;
 int height = 512;
@@ -156,7 +155,7 @@ void InitialiseGUI(GLFWwindow* window)
 	ImGuiIO& io = ImGui::GetIO();
 	ImGui_ImplGlfw_InitForOpenGL(window, true);
 	ImGui_ImplOpenGL3_Init(glsl_version);
-	ImGui::StyleColorsDark();
+	ImGui::StyleColorsClassic();
 }
 
 void displayGUI()
@@ -167,7 +166,7 @@ void displayGUI()
 	ImGui::NewFrame();
 
 	// render your GUI
-	ImGui::Begin("PhotoGimp");
+	ImGui::Begin("PhotoGimp", 0, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse);
 
 	if (ImGui::Button("Trace une forme"))
 	{
@@ -182,19 +181,20 @@ void displayGUI()
 	if (ImGui::Button("Decoupe !"))
 	{
 		clickMenuEnter = true;
+		input.decoupeForme();
 	}
 
 	static float color[4] = { 1.0f, 1.0f, 1.0f, 1.0f };
-	if (ImGui::ColorEdit3("couleur", color))
+	if (ImGui::ColorEdit3("Couleur", color))
 	{
 		std::cerr << color[0] << std::endl;
 		choosedColor = color;
 	}
 
-	if (ImGui::Button("[Dans GUI] Tout effacer"))
+	if (ImGui::Button("Tout effacer"))
 	{
-		std::cerr << "je veux tout effacer mais il se passe rien. C'est normal lol" << std::endl;
 		clickDelete = true;
+		input.deleteVertex();
 	}
 	//choosedColor = color;
 	ImGui::End();
@@ -247,7 +247,6 @@ int main(void)
 
 		displayGUI();
 		input.waitForBool();
-		std::cerr << canCreatePoint << std::endl;
 
 		glfwSwapBuffers(window);
 		/* Poll for and process events */
