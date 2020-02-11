@@ -40,7 +40,9 @@ Input input;
 std::vector<Vertex> vertices;
 std::vector<int> shapesSizes; 
 std::vector<Vertex> tabMenuFormeVertices;
+std::vector<int> idFisrtVertexForme;
 std::vector<Vertex> tabMenuFenetreVertices;
+std::vector<int> idFisrtVertexFenetre;
 
 //variables pour gui
 Color choosedColor(1.f, 1.f, 1.f);
@@ -48,7 +50,7 @@ bool clickMenuForme = false;
 bool clickMenuFenetre = false;
 bool clickMenuRemplissage = false;
 bool clickDelete = false;
-bool clickMenuEnter = false;
+bool clickMenuDecoupe = false;
 
 int width = 1024;
 int height = 512;
@@ -206,7 +208,7 @@ void displayGUI()
 
 	if (ImGui::Button("Decouper !"))
 	{
-		clickMenuEnter = true;
+		clickMenuDecoupe = true;
 		input.decoupeForme();
 	}
 

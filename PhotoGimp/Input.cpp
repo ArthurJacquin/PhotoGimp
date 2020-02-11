@@ -12,14 +12,16 @@ extern int width, height;
 extern std::vector<Vertex> vertices;
 extern std::vector<int> shapesSizes;
 extern std::vector<Vertex> tabMenuFormeVertices;
+extern std::vector<int> idFisrtVertexForme;
 extern std::vector<Vertex> tabMenuFenetreVertices;
+extern std::vector<int> idFisrtVertexFenetre;
 extern UI button;
 
 bool canCreatePoint = false;
 
 extern bool clickMenuForme;
 extern bool clickMenuFenetre;
-extern bool clickMenuEnter;
+extern bool clickMenuDecoupe;
 extern bool clickMenuRemplissage;
 extern bool clickDelete;
 
@@ -31,7 +33,7 @@ void Input::waitForBool()
 	{
 		clickMenuForme = true;
 		canCreatePoint = true;
-		clickMenuEnter = false;
+		clickMenuDecoupe = false;
 		clickMenuFenetre = false;
 		clickMenuRemplissage = false;
 		clickDelete = false;
@@ -40,7 +42,7 @@ void Input::waitForBool()
 	{
 		clickMenuForme = false;
 		canCreatePoint = true;
-		clickMenuEnter = false;
+		clickMenuDecoupe = false;
 		clickMenuFenetre = true;
 		clickMenuRemplissage = false;
 		clickDelete = false;
@@ -49,16 +51,16 @@ void Input::waitForBool()
 	{
 		clickMenuForme = false;
 		canCreatePoint = true;
-		clickMenuEnter = false;
+		clickMenuDecoupe = false;
 		clickMenuFenetre = false;
 		clickMenuRemplissage = true;
 		clickDelete = false;
 	}
-	else if (clickMenuEnter)
+	else if (clickMenuDecoupe)
 	{
 		clickMenuForme = false;
 		canCreatePoint = false;
-		clickMenuEnter = true;
+		clickMenuDecoupe = true;
 		clickMenuFenetre = false;
 		clickMenuRemplissage = false;
 		clickDelete = false;
@@ -67,7 +69,7 @@ void Input::waitForBool()
 	{
 		clickMenuForme = false;
 		canCreatePoint = false;
-		clickMenuEnter = false;
+		clickMenuDecoupe = false;
 		clickMenuFenetre = false;
 		clickMenuRemplissage = false;
 		clickDelete = true;
@@ -78,18 +80,100 @@ void Input::deleteVertex()
 {
 	vertices.clear();
 	shapesSizes.clear();
+
 	tabMenuFormeVertices.clear();
+	idFisrtVertexForme.clear();
+
 	tabMenuFenetreVertices.clear();
+	idFisrtVertexFenetre.clear();
 }
 
 void Input::decoupeForme()
 {
 	if (tabMenuFenetreVertices.size() > 0)
 	{
-		vertices.clear();
-		vertices = Fenetrage(tabMenuFormeVertices, tabMenuFenetreVertices);
+		std::vector<Vertex> newVertices;
+		std::vector<int> newIdForme;
+
 		shapesSizes.clear();
-		shapesSizes.push_back(vertices.size());
+		int currentFenetre = 0;
+
+		for (int i = 0; i < idFisrtVertexFenetre.size(); ++i)
+		{
+			std::vector<Vertex> fenetre;
+
+			if (currentFenetre == idFisrtVertexFenetre.size() - 1)
+			{
+				//Recuperation d'une des fenetres
+				for (int j = idFisrtVertexFenetre[currentFenetre]; j < tabMenuFenetreVertices.size(); ++j)
+				{
+					fenetre.push_back(tabMenuFenetreVertices[j]);
+				}
+			}
+			else 
+			{
+				//Recuperation d'une des fenetres
+				for (int j = idFisrtVertexFenetre[currentFenetre]; j < idFisrtVertexFenetre[currentFenetre + 1]; ++j)
+				{
+					fenetre.push_back(tabMenuFenetreVertices[j]);
+				}
+			}
+			
+			int currentForme = 0;
+
+			for (int j = 0; j < idFisrtVertexForme.size(); ++j)
+			{
+				std::vector<Vertex> forme;
+				
+
+				if (currentForme == idFisrtVertexForme.size() - 1)
+				{
+					//Recuperation d'une des formes
+					for (int k = idFisrtVertexForme[currentForme]; k < tabMenuFormeVertices.size(); ++k)
+					{
+						forme.push_back(tabMenuFormeVertices[k]);
+					}
+				}
+				else
+				{
+					//Recuperation d'une des formes
+					for (int k = idFisrtVertexForme[currentForme]; k < idFisrtVertexForme[currentForme + 1]; ++k)
+					{
+						forme.push_back(tabMenuFormeVertices[k]);
+					}
+				}
+				
+				//Fenetrage de cette forme
+				std::vector<Vertex> newForme = Fenetrage(forme, fenetre);
+
+				//Enregistrement de la forme découpé
+				for (int k = 0; k < newForme.size(); ++k)
+				{
+					newVertices.push_back(newForme[k]);
+				}
+
+				//Update idForme
+				if (newIdForme.size() == 0)
+					newIdForme.push_back(0);
+				else
+					newIdForme.push_back(shapesSizes.back() + newIdForme.back());
+
+				shapesSizes.push_back(newForme.size());
+
+				currentForme++;
+			}
+
+			currentFenetre++;
+		}
+
+		//Remplassement des anciens vertices
+		vertices = newVertices;
+		tabMenuFormeVertices = newVertices;
+		idFisrtVertexForme = newIdForme;
+
+		//Clear fenetres
+		tabMenuFenetreVertices.clear();
+		idFisrtVertexFenetre.clear();
 
 		for (int i = 0; i < vertices.size(); i++)
 			std::cerr << vertices[i] << std::endl;
@@ -134,22 +218,25 @@ void Input::mouse_button_callback(GLFWwindow * window, int button, int action, i
 	}
 }
 
-void Input::cursorEnterCallback(GLFWwindow* window, int entered)
-{
-	if (entered)
-	{
-		std::cout << "entered window" << std::endl;
-	}
-	else
-	{
-		std::cout << "leave window" << std::endl;
-	}
-}
-
 void Input::keyboard_button_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
 {
 	if (key == GLFW_KEY_ENTER && action == GLFW_PRESS && canCreatePoint)
 	{
+		if (clickMenuForme)
+		{
+			if (idFisrtVertexForme.size() == 0)
+				idFisrtVertexForme.push_back(0);
+			else
+				idFisrtVertexForme.push_back(shapesSizes.back() + idFisrtVertexForme.back());
+		}
+		else if (clickMenuFenetre)
+		{
+			if (idFisrtVertexFenetre.size() == 0)
+				idFisrtVertexFenetre.push_back(0);
+			else
+				idFisrtVertexFenetre.push_back(shapesSizes.back() + idFisrtVertexFenetre.back());
+		}
+
 		int sumVerticesInShapes = 0;
 		for (int i = 0; i < shapesSizes.size(); ++i)
 			sumVerticesInShapes += shapesSizes[i];
@@ -160,7 +247,7 @@ void Input::keyboard_button_callback(GLFWwindow* window, int key, int scancode, 
 		clickMenuForme = false;
 		clickMenuFenetre = false;
 		clickMenuRemplissage = false;
-		clickMenuEnter = false;
+		clickMenuDecoupe = false;
 		clickDelete = false;
 	}
 
@@ -169,18 +256,19 @@ void Input::keyboard_button_callback(GLFWwindow* window, int key, int scancode, 
 		deleteVertex();
 	}
 
-	if (key == GLFW_KEY_F && action == GLFW_PRESS)
-	{
-		std::cerr << "Press F To pay respect" << std::endl;
+	//if (key == GLFW_KEY_F && action == GLFW_PRESS)
+	//{
+	//	std::cerr << "Press F To pay respect" << std::endl;
 
-		vertices.clear();
-		vertices = Fenetrage(tabMenuFormeVertices, tabMenuFenetreVertices);
-		shapesSizes.clear();
-		shapesSizes.push_back(vertices.size());
+	//	vertices.clear();
+	//	vertices = Fenetrage(tabMenuFormeVertices, tabMenuFenetreVertices);
+	//	shapesSizes.clear();
+	//	shapesSizes.push_back(vertices.size());
+	//	idFisrtVertexFenetre.clear();
 
-		for(int i = 0; i < vertices.size(); i++)
-			std::cerr << vertices[i] << std::endl;
-	}
+	//	for(int i = 0; i < vertices.size(); i++)
+	//		std::cerr << vertices[i] << std::endl;
+	//}
 
 	if (key == GLFW_KEY_T && action == GLFW_PRESS)
 	{
