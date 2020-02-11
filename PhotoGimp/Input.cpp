@@ -99,11 +99,11 @@ void Input::mouse_button_callback(GLFWwindow * window, int button, int action, i
 	{
 		double xpos, ypos;
 		glfwGetCursorPos(window, &xpos, &ypos);
-		std::cerr << xpos << ypos << std::endl;
+
 		if (canCreatePoint == true)
 		{
-			//if (xpos > 100 && ypos > 100)
-			//{
+			if (xpos > 220)
+			{
 				Vertex newPoint = Vertex(-1.0f + 2 * xpos / width, 1.0f - 2 * ypos / height, choosedColor.x, choosedColor.y, choosedColor.z);
 				vertices.push_back(newPoint);
 
@@ -118,7 +118,7 @@ void Input::mouse_button_callback(GLFWwindow * window, int button, int action, i
 					tabMenuFenetreVertices.push_back(newPoint);
 					std::cerr << "Point Vertices : " << newPoint << std::endl;
 				}
-			//}
+			}
 		}
 	}
 

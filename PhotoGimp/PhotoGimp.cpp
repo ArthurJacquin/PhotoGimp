@@ -164,33 +164,49 @@ void displayGUI()
 	ImGui_ImplOpenGL3_NewFrame();
 	ImGui_ImplGlfw_NewFrame();
 	ImGui::NewFrame();
-
+	ImGui::SetNextWindowSize(ImVec2(210, 500));
 	// render your GUI
 	ImGui::Begin("PhotoGimp", 0, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse);
-
-	if (ImGui::Button("Trace une forme"))
-	{
-		clickMenuForme = true;
-	}
-
-	if (ImGui::Button("Trace une fenetre"))
-	{
-		clickMenuFenetre = true;
-	}
-
-	if (ImGui::Button("Decoupe !"))
-	{
-		clickMenuEnter = true;
-		input.decoupeForme();
-	}
-
+	ImGui::TextColored(ImVec4(0.9, 0.1, 0.1, 1.0), "  Bienvenue dans PhotoGimp ");
+	ImGui::Text(" ");
+	ImGui::Text("Vous pouvez creer plusieurs");
+	ImGui::Text("formes et les decouper avec");
+	ImGui::Text("      des fenetres");
+	ImGui::Text(" ");
+	ImGui::Text(" -------------------------  ");
+	ImGui::Text(" ");
+	ImGui::Text("  Choississez une couleur");
+	ImGui::Text("  avant de tracer la forme");
+	ImGui::Text("       ou la fenetre");
+	ImGui::Text(" ");
 	static float color[4] = { 1.0f, 1.0f, 1.0f, 1.0f };
-	if (ImGui::ColorEdit3("Couleur", color))
+
+	if (ImGui::ColorEdit3("Color", color))
 	{
 		std::cerr << color[0] << std::endl;
 		choosedColor = color;
 	}
 
+	ImGui::Text(" ");
+	if (ImGui::Button("Tracer une forme"))
+	{
+		clickMenuForme = true;
+	}
+
+	if (ImGui::Button("Tracer une fenetre"))
+	{
+		clickMenuFenetre = true;
+	}
+
+	if (ImGui::Button("Decouper !"))
+	{
+		clickMenuEnter = true;
+		input.decoupeForme();
+	}
+
+	ImGui::Text(" ");
+	ImGui::Text(" -------------------------  ");
+	ImGui::Text(" ");
 	if (ImGui::Button("Tout effacer"))
 	{
 		clickDelete = true;
