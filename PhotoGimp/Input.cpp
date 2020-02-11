@@ -84,13 +84,16 @@ void Input::deleteVertex()
 
 void Input::decoupeForme()
 {
-	vertices.clear();
-	vertices = Fenetrage(tabMenuFormeVertices, tabMenuFenetreVertices);
-	shapesSizes.clear();
-	shapesSizes.push_back(vertices.size());
+	if (tabMenuFenetreVertices.size() > 0)
+	{
+		vertices.clear();
+		vertices = Fenetrage(tabMenuFormeVertices, tabMenuFenetreVertices);
+		shapesSizes.clear();
+		shapesSizes.push_back(vertices.size());
 
-	for (int i = 0; i < vertices.size(); i++)
-		std::cerr << vertices[i] << std::endl;
+		for (int i = 0; i < vertices.size(); i++)
+			std::cerr << vertices[i] << std::endl;
+	}
 }
 
 void Input::mouse_button_callback(GLFWwindow * window, int button, int action, int mods)
@@ -122,7 +125,7 @@ void Input::mouse_button_callback(GLFWwindow * window, int button, int action, i
 		}
 	}
 
-	if (button == GLFW_KEY_BACKSPACE && action == GLFW_PRESS)
+	if (button == GLFW_MOUSE_BUTTON_RIGHT && action == GLFW_PRESS)
 	{
 		if (vertices.empty() == false)
 		{
