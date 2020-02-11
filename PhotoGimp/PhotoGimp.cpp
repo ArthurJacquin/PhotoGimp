@@ -204,6 +204,12 @@ void displayGUI()
 		input.decoupeForme();
 	}
 
+	if (ImGui::Button("Remplir !"))
+	{
+		//TODO : finir remplissage
+		clickMenuRemplissage = true;
+	}
+
 	ImGui::Text(" ");
 	ImGui::Text(" -------------------------  ");
 	ImGui::Text(" ");
