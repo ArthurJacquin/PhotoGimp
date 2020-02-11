@@ -5,11 +5,13 @@
 #include <iostream>
 #include <vector>
 #include "Fenetrage.h"
+#include "Remplissage.h"
 #include "Color.h"
 #include "imgui.h"
 
 extern int width, height;
 extern std::vector<Vertex> vertices;
+extern std::vector<Vertex> verticesToDraw;
 extern std::vector<int> shapesSizes;
 extern std::vector<Vertex> tabMenuFormeVertices;
 extern std::vector<Vertex> tabMenuFenetreVertices;
@@ -94,6 +96,11 @@ void Input::decoupeForme()
 		for (int i = 0; i < vertices.size(); i++)
 			std::cerr << vertices[i] << std::endl;
 	}
+}
+
+void Input::remplirForme()
+{
+	verticesToDraw = Remplissage(vertices);
 }
 
 void Input::mouse_button_callback(GLFWwindow * window, int button, int action, int mods)

@@ -107,7 +107,8 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>../libs/glfw-3.3/lib-vc2015;../libs/glew-2.1.0/lib/Release/x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>../libs/glfw-3.3/lib-vc2015;../libs/glew-2.1.0/lib/Release/x64;../libs/imgui-master;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -150,8 +151,11 @@
   <ItemGroup>
     <ClInclude Include="..\common\GLShader.h" />
     <ClInclude Include="Color.h" />
+    <ClInclude Include="CoteActif.h" />
+    <ClInclude Include="CoteList.h" />
     <ClInclude Include="Fenetrage.h" />
     <ClInclude Include="Input.h" />
+    <ClInclude Include="Remplissage.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Vertex.h" />
@@ -159,9 +163,12 @@
   <ItemGroup>
     <ClCompile Include="..\common\GLShader.cpp" />
     <ClCompile Include="Color.cpp" />
+    <ClCompile Include="CoteActif.cpp" />
+    <ClCompile Include="CoteList.cpp" />
     <ClCompile Include="Fenetrage.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="PhotoGimp.cpp" />
+    <ClCompile Include="Remplissage.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

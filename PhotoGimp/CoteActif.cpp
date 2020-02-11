@@ -8,6 +8,14 @@ CoteActif::CoteActif()
 	next_cote = nullptr;
 }
 
+CoteActif::CoteActif(CoteActif& const copy)
+{
+	y_max = copy.y_max;
+	curr_x = copy.curr_x;
+	coeff_dir = copy.coeff_dir;
+	next_cote = copy.next_cote;
+}
+
 CoteActif::CoteActif(float yMax, float currX, float coeff)
 {
 	y_max = yMax;
@@ -24,8 +32,17 @@ CoteActif::CoteActif(float yMax, float currX, float coeff, CoteActif& nextCote)
 	next_cote = &nextCote;
 }
 
+CoteActif::~CoteActif()
+{
+}
+
 void CoteActif::SetCurrX(float const currX)
 {
+	curr_x = currX;
+}
 
+void CoteActif::SetNextCote(CoteActif* const cote)
+{
+	next_cote = cote;
 }
 

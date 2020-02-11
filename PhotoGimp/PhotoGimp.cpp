@@ -212,8 +212,8 @@ void displayGUI()
 
 	if (ImGui::Button("Remplir !"))
 	{
-		//TODO : finir remplissage
 		clickMenuRemplissage = true;
+		input.remplirForme();
 	}
 
 	ImGui::Text(" ");
