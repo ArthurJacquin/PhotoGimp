@@ -164,7 +164,7 @@ void displayGUI()
 	ImGui_ImplOpenGL3_NewFrame();
 	ImGui_ImplGlfw_NewFrame();
 	ImGui::NewFrame();
-	ImGui::SetNextWindowSize(ImVec2(210, 500));
+	ImGui::SetNextWindowSize(ImVec2(220, 550));
 	// render your GUI
 	ImGui::Begin("PhotoGimp", 0, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse);
 	ImGui::TextColored(ImVec4(0.9, 0.1, 0.1, 1.0), "  Bienvenue dans PhotoGimp ");
@@ -175,6 +175,12 @@ void displayGUI()
 	ImGui::Text(" ");
 	ImGui::Text(" -------------------------  ");
 	ImGui::Text(" ");
+	ImGui::Text("Pour ajouter un point : ");
+	ImGui::Text("     click gauche ");
+	ImGui::Text("Pour supprimer un point : ");
+	ImGui::Text("     click droit ");
+	ImGui::Text(" ");
+	ImGui::Text(" -------------------------  ");
 	ImGui::Text("  Choississez une couleur");
 	ImGui::Text("  avant de tracer la forme");
 	ImGui::Text("       ou la fenetre");
@@ -235,7 +241,7 @@ int main(void)
 		return -1;
 
 	/* Create a windowed mode window and its OpenGL context */
-	window = glfwCreateWindow(1024, 512, "PhotoGimp", NULL, NULL);
+	window = glfwCreateWindow(1024, 600, "PhotoGimp", NULL, NULL);
 	InitialiseGUI(window);
 
 	if (!window)
