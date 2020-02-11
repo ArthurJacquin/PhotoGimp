@@ -139,9 +139,9 @@ std::vector<Vertex> FindIntersectionWithLine(std::vector<Vertex> Line, std::vect
 		P4.x = Poly[j].x;
 		P4.y = Poly[j].y;
 
-		Vertex intersectionPoint = intersection(P1, P2, P3, P4);
+		Vertex intersectionPoint = intersection(P1, P2, P3, P4); //intersection entre la ligne et le côté du poly
 		intersections.push_back(intersectionPoint); //ajouter l'intersection à la liste des intersections
-		std::cout << u8"Intersection en y : " << currY << " => " << intersectionPoint.x << std::endl;
+		std::cout << "Intersection en y : " << currY << " => " << intersectionPoint.x << std::endl;
 	}
 
 	return intersections;
@@ -162,7 +162,7 @@ std::vector<Vertex> Remplissage(std::vector<Vertex> Poly)
 
 	double xMin, xMax, currX, currY;
 
-	for (currY = rect[0].y; currY < rect[2].y; currY += 0.01f)
+	for (currY = rect[0].y; currY < rect[2].y; currY += 0.001f)
 	{
 		currLine = GetCurrentLineFromRect(rect, currY); //récupère la ligne courante
 		intersections = FindIntersectionWithLine(currLine, Poly); //récupère les intersections entre la ligne et le poly
