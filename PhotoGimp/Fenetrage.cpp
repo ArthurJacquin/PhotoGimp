@@ -39,14 +39,15 @@ bool coupe(Vertex P1, Vertex P2, Vertex P3, Vertex P4)
 bool CheckIfClockwise(std::vector<Vertex> v)
 {
 	v.push_back(v[0]);
-	int som = 0;
+	float som = 0;
 
 	for (int i = 0; i < v.size() - 1; ++i)
 	{
-		som += (v[i + 1].x - v[i].x) - (v[i + 1].y - v[i].y);
+		som += (v[i + 1].x - v[i].x) * (v[i + 1].y + v[i].y);
 	}
 
-	return som > 0;
+	std::cout << (som >= 0.f);
+	return som >= 0.f;
 }
 
 bool visible(Vertex PointToTest, Vertex FenetrePoint, Vertex FenetreNextPoint, bool clockwise)
@@ -57,11 +58,11 @@ bool visible(Vertex PointToTest, Vertex FenetrePoint, Vertex FenetreNextPoint, b
 	
 	if(clockwise)
 	{
-		return leftSide > 0;
+		return leftSide > 0.0f;
 	}
 	else
 	{
-		return leftSide < 0;
+		return leftSide < 0.0f;
 	}
 }
 
