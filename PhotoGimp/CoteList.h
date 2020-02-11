@@ -10,6 +10,7 @@ private:
 public:
 	CoteList();
 	CoteList(const CoteList& list);
+	CoteList(CoteActif& const cote);
 	~CoteList();
 
 	void AddBeginList(CoteActif& const cote);

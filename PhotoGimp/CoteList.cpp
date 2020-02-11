@@ -16,8 +16,14 @@ CoteList::CoteList(const CoteList& list)
 	while (reader != nullptr) 
 	{
 		AddEndList(*reader);
-		reader = reader->GetNextCote(); //TODO : A tester
+		reader = reader->GetNextCote();
 	}
+}
+
+CoteList::CoteList(CoteActif& const cote)
+{
+	head_cote = tail_cote = &cote;
+	nb_cote = 1;
 }
 
 CoteList::~CoteList()
@@ -28,16 +34,23 @@ CoteList::~CoteList()
 void CoteList::AddBeginList(CoteActif& const cote)
 {
 	CoteActif* new_cote = &cote;
-	if (new_cote == nullptr) 
+	if (new_cote == nullptr)
 	{
 		std::cout << u8"[SetBeginList] Le côté passé en paramètre est nul" << std::endl;
 		return;
 	}
 
-	new_cote->SetNextCote(head_cote);
-	head_cote = new_cote;
-	if (nb_cote == 0)
-		tail_cote = new_cote;
+	if (head_cote == nullptr)
+	{
+		new_cote->SetNextCote(*new_cote);
+		tail_cote = head_cote = new_cote;
+	}
+	else 
+	{
+		new_cote->SetNextCote(*head_cote);
+		head_cote = new_cote;
+		tail_cote->SetNextCote(*head_cote);
+	}
 	++nb_cote;
 }
 
@@ -50,7 +63,7 @@ void CoteList::AddEndList(CoteActif& const cote)
 		return;
 	}
 
-	tail_cote->SetNextCote(new_cote);
+	tail_cote->SetNextCote(*new_cote);
 	tail_cote = new_cote;
 	if (nb_cote == 0)
 		tail_cote = head_cote;
@@ -86,8 +99,8 @@ void CoteList::AddAtPosition(CoteActif& const cote, int pos)
 		previous_cote = previous_cote->GetNextCote();
 	}
 
-	new_cote->SetNextCote(previous_cote->GetNextCote());
-	previous_cote->SetNextCote(new_cote);
+	new_cote->SetNextCote(*previous_cote->GetNextCote());
+	previous_cote->SetNextCote(*new_cote);
 	++nb_cote;
 }
 
@@ -129,7 +142,7 @@ void CoteList::RemoveLast()
 		}
 
 		delete before_last->GetNextCote();
-		before_last->SetNextCote(nullptr);
+		before_last->SetNextCote(*head_cote);
 		tail_cote = before_last;
 	}
 
@@ -151,7 +164,7 @@ void CoteList::RemoveAtPosition(int pos)
 			}
 
 			CoteActif* to_remove = previous_cote->GetNextCote();
-			previous_cote->SetNextCote(to_remove->GetNextCote());
+			previous_cote->SetNextCote(*to_remove->GetNextCote());
 			delete to_remove;
 			--nb_cote;
 		}

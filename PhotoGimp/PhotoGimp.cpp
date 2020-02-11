@@ -43,6 +43,8 @@ std::vector<int> shapesSizes;
 std::vector<Vertex> tabMenuFormeVertices;
 std::vector<Vertex> tabMenuFenetreVertices;
 
+std::vector<Vertex> rectangleEnglobant;
+
 //variables pour gui
 Color choosedColor(1.f, 1.f, 1.f);
 bool clickMenuForme = false;

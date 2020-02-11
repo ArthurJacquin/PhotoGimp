@@ -1,4 +1,5 @@
 #pragma once
+#include <iostream>
 #include <vector>
 
 struct CoteActif {
@@ -16,10 +17,12 @@ public:
 	~CoteActif();
 
 	void SetCurrX(float const currX);
-	void SetNextCote(CoteActif* const cote);
+	void SetNextCote(CoteActif& const cote);
 	float GetYMax() const { return y_max; };
 	float GetCurrX() const { return curr_x; };
 	float GetCoeff() const { return coeff_dir; };
 	float GetInverseCoeff() const { return (1/coeff_dir); };
 	CoteActif* GetNextCote() const { return next_cote; };
+
+	friend std::ostream& operator <<(std::ostream& os, const CoteActif& obj);
 };

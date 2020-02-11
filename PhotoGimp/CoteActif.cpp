@@ -34,6 +34,7 @@ CoteActif::CoteActif(float yMax, float currX, float coeff, CoteActif& nextCote)
 
 CoteActif::~CoteActif()
 {
+	delete next_cote;
 }
 
 void CoteActif::SetCurrX(float const currX)
@@ -41,8 +42,13 @@ void CoteActif::SetCurrX(float const currX)
 	curr_x = currX;
 }
 
-void CoteActif::SetNextCote(CoteActif* const cote)
+void CoteActif::SetNextCote(CoteActif& const cote)
 {
-	next_cote = cote;
+	this->next_cote = &cote;
 }
 
+std::ostream& operator<<(std::ostream& os, const CoteActif& obj)
+{
+	os << "(" << obj.GetYMax() << "," << obj.GetCurrX() << "," << obj.GetCoeff() << ")" << std::endl;
+	return os;
+}
