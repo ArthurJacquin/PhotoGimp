@@ -38,6 +38,7 @@ GLuint VBO;
 Input input;
 //tableau de positions du tableau en cours
 std::vector<Vertex> vertices;
+std::vector<Vertex> verticesToDraw;
 std::vector<int> shapesSizes; 
 std::vector<Vertex> tabMenuFormeVertices;
 std::vector<Vertex> tabMenuFenetreVertices;
