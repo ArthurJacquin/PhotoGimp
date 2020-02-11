@@ -50,25 +50,25 @@ bool CheckIfClockwise(std::vector<Vertex> v)
 	return som >= 0.f;
 }
 
-bool visible(Vertex PointToTest, Vertex FenetrePoint, Vertex FenetreNextPoint, bool clockwise)
+bool visible(Vertex p, Vertex p1, Vertex p2, bool cw)
 {
-	//détermine l'orientation des triangles avec normes des vecteurs FiPk et FiFi+1
-	float leftSide = ((FenetreNextPoint.y - FenetrePoint.y) * PointToTest.x + (FenetrePoint.x - FenetreNextPoint.x)) * PointToTest.y
-		+ ((FenetreNextPoint.x * FenetrePoint.y) - (FenetreNextPoint.y * FenetrePoint.x));
-	
-	if(clockwise)
+	if (cw)
 	{
-		return leftSide > 0.0f;
+		return (p2.y - p1.y) * p.x + (p1.x - p2.x) * p.y + (p2.x * p1.y - p1.x * p2.y) > 0;
 	}
 	else
 	{
-		return leftSide < 0.0f;
+	//détermine l'orientation des triangles avec normes des vecteurs FiPk et FiFi+1
+	return (p2.y - p1.y) * p.x + (p1.x - p2.x) * p.y + (p2.x * p1.y - p1.x * p2.y) < 0;
 	}
+
+
 }
 
 //REMARQUE : Ps est la liste des vertex tabMenuFormeVertices
 std::vector<Vertex> Fenetrage(std::vector<Vertex> PL_Forme, std::vector<Vertex> PW_Fenetre)
 {
+	/*
 	bool cw = CheckIfClockwise(PW_Fenetre);
 	PW_Fenetre.push_back(PW_Fenetre[0]);
 
@@ -106,7 +106,7 @@ std::vector<Vertex> Fenetrage(std::vector<Vertex> PL_Forme, std::vector<Vertex> 
 					}
 				}
 			}
-
+			
 			S = PL_Forme[j];
 			if (visible(S, PW_Fenetre[i], PW_Fenetre[i + 1], cw))
 			{
@@ -116,21 +116,116 @@ std::vector<Vertex> Fenetrage(std::vector<Vertex> PL_Forme, std::vector<Vertex> 
 		}
 		if (N2 > 0)
 		{
-			if (!visible(S, PW_Fenetre[i], PW_Fenetre[i + 1], cw) ^ !visible(F, PW_Fenetre[i], PW_Fenetre[i + 1], cw))
-			{
+			//if (!visible(S, PW_Fenetre[i], PW_Fenetre[i + 1], cw) ^ !visible(F, PW_Fenetre[i], PW_Fenetre[i + 1], cw))
+			//{
 				if (coupe(S, F, PW_Fenetre[i], PW_Fenetre[i + 1]))
 				{
+					//visible si ses deux extrémités sont visibles 
+					if (visible(S, PW_Fenetre[i], PW_Fenetre[i + 1], cw) && visible(F, PW_Fenetre[i], PW_Fenetre[i + 1], cw))
+					{
+						PS.push_back(F);
+						PS.push_back(S);
+					}
+					//Premier vertex est à l'extérieur, le second à l'intérieur
+					if (!visible(S, PW_Fenetre[i], PW_Fenetre[i + 1], cw) && visible(F, PW_Fenetre[i], PW_Fenetre[i + 1], cw))
+					{
+						I = intersection(S, F, PW_Fenetre[i], PW_Fenetre[i + 1]);
+						std::cerr << "intersection entre :" << S << "-> " << F << "et " << PW_Fenetre[i] << "-> " << PW_Fenetre[i + 1] << "= " << I << std::endl;
+						PS.push_back(I);
+						N2++;
+					}
+					//Premier intérieur, deuxieme extérieur
+					else if (visible(S, PW_Fenetre[i], PW_Fenetre[i + 1], cw) && !visible(F, PW_Fenetre[i], PW_Fenetre[i + 1], cw))
+					{
+						I = intersection(S, F, PW_Fenetre[i], PW_Fenetre[i + 1]);
+						std::cerr << "intersection entre :" << S << "-> " << F << "et " << PW_Fenetre[i] << "-> " << PW_Fenetre[i + 1] << "= " << I << std::endl;
+						PS.push_back(I);
+					}
+					// invisible si ses deux extrémités sont invisibles
+					else if (!visible(S, PW_Fenetre[i], PW_Fenetre[i + 1], cw) && !visible(F, PW_Fenetre[i], PW_Fenetre[i + 1], cw))
+					{
+						std::cerr << "la je fais rien lol" << std::endl;
+					}
+					/*
 					I = intersection(S, F, PW_Fenetre[i], PW_Fenetre[i + 1]);
 					std::cerr << "intersection entre :" << S << "-> " << F << "et " << PW_Fenetre[i] << "-> " << PW_Fenetre[i + 1] << "= " << I << std::endl;
 					PS.push_back(I);
 					N2++;
 				}
-			}
+			//}
 
 			PL_Forme = PS;
 			N1 = N2;
 		}
 	}
+	*/
 
-	return PL_Forme;
+	bool clockWise = CheckIfClockwise(PW_Fenetre);
+
+	Vertex s = { 0.0, 0.0, 0.0, 1.0, 0.0 };
+	Vertex e = { 0.0, 0.0, 0.0, 1.0, 0.0 };
+	Vertex I = { 0.0, 0.0, 0.0, 1.0, 0.0 };
+	Vertex cp1 = { 0.0, 0.0, 0.0, 1.0, 0.0 };
+	Vertex cp2 = { 0.0, 0.0, 0.0, 1.0, 0.0 };
+
+	std::vector<Vertex> inputPolygon;
+	inputPolygon.resize(99);
+
+	std::vector<Vertex> newPolygon;
+	newPolygon.resize(99);
+
+	for (int i = 0; i < PL_Forme.size(); i++)
+	{
+		newPolygon[i] = PL_Forme[i];
+	}
+	int newPolygonSize = PL_Forme.size();
+
+	for (int j = 0; j < PW_Fenetre.size(); j++)
+	{
+		for (int k = 0; k < newPolygonSize; k++)
+		{
+			inputPolygon[k] = newPolygon[k];
+		}
+
+		int counter = 0;
+		cp1 = PW_Fenetre[j];
+		cp2 = PW_Fenetre[(j + 1) % PW_Fenetre.size()];
+		std::cerr << "newPolygonSize : " << newPolygonSize << std::endl;
+
+		for (int i = 0; i < newPolygonSize; i++)
+		{
+			s = inputPolygon[i];
+			e = inputPolygon[(i + 1) % newPolygonSize];
+			std::cerr << "inputPolygon : " << inputPolygon.size() << std::endl;
+			//visible si ses deux extrémités sont visibles 
+			if (visible(s, cp1, cp2, clockWise) && visible(e, cp1, cp2, clockWise))
+			{
+				std::cerr << "visible si ses deux extremites sont visibles " << std::endl;
+				newPolygon[counter++] = e;
+			}
+			//Premier vertex est à l'extérieur, le second à l'intérieur
+			else if (!visible(s, cp1, cp2, clockWise) && visible(e, cp1, cp2, clockWise))
+			{
+				std::cerr << "Premier vertex est a l'exterieur, le second à l'interieur " << std::endl;
+				newPolygon[counter++] = intersection(s, e, cp1, cp2);
+				newPolygon[counter++] = e;
+			}
+			//Premier intérieur, deuxieme extérieur
+			else if (visible(s, cp1, cp2, clockWise) && !visible(e, cp1, cp2, clockWise))
+			{
+				std::cerr << "Premier interieur, deuxieme exterieur" << std::endl;
+				newPolygon[counter++] = intersection(s, e, cp1, cp2);
+			}
+			// invisible si ses deux extrémités sont invisibles
+			else if (!visible(s, cp1, cp2, clockWise) && !visible(e, cp1, cp2, clockWise))
+			{
+				std::cerr << "la je fais rien lol" << std::endl;
+			}
+		}
+		newPolygonSize = counter;
+		std::cerr << "counter : " << counter << std::endl;
+		//newPolygon.resize(counter);
+	}
+	newPolygon.resize(newPolygonSize);
+	return newPolygon;
 }
