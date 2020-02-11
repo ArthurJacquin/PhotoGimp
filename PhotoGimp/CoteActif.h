@@ -24,5 +24,5 @@ public:
 	float GetInverseCoeff() const { return (1/coeff_dir); };
 	CoteActif* GetNextCote() const { return next_cote; };
 
-	friend std::ostream& operator <<(std::ostream& os, const CoteActif& obj);
+	//friend std::ostream& operator <<(std::ostream& os, const CoteActif& obj);
 };

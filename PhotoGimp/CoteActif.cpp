@@ -47,8 +47,8 @@ void CoteActif::SetNextCote(CoteActif& const cote)
 	this->next_cote = &cote;
 }
 
-std::ostream& operator<<(std::ostream& os, const CoteActif& obj)
+/*std::ostream& operator<<(std::ostream& os, const CoteActif& obj)
 {
 	os << "(" << obj.GetYMax() << "," << obj.GetCurrX() << "," << obj.GetCoeff() << ")" << std::endl;
 	return os;
-}
+}*/

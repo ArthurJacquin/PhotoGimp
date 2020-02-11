@@ -17,7 +17,7 @@ extern std::vector<Vertex> tabMenuFormeVertices;
 extern std::vector<Vertex> tabMenuFenetreVertices;
 extern UI button;
 
-extern std::vector<Vertex> rectangleEnglobant;
+//extern std::vector<Vertex> rectangleEnglobant;
 
 bool canCreatePoint = false;
 
@@ -103,16 +103,16 @@ void Input::decoupeForme()
 void Input::remplirForme()
 {
 	//vertices = RectEG(vertices);
-	rectangleEnglobant = RectEG(vertices);
-	for (int i = 0; i < rectangleEnglobant.size(); ++i)
+	//rectangleEnglobant = RectEG(vertices);
+	/*for (int i = 0; i < rectangleEnglobant.size(); ++i)
 	{
 		vertices.push_back(rectangleEnglobant[i]);
-	}
+	}*/
 	verticesToDraw = Remplissage(vertices);
-	/*for (int i = 0; i < verticesToDraw.size(); ++i)
+	for (int i = 0; i < verticesToDraw.size(); ++i)
 	{
 		vertices.push_back(verticesToDraw[i]);
-	}*/
+	}
 	
 }
 

@@ -4,9 +4,9 @@ CoteList GetLCFromPoly(std::vector<Vertex> Poly)
 {
 	std::cout << "Hello from GetLCFromPoly" << std::endl;
 	
-	CoteActif currCote;
+	//CoteActif currCote;
 	CoteList LC; //Liste des côtés du Poly
-	int nbCote = 0;
+	/*int nbCote = 0;
 	int j = 0;
 	CoteActif previous;
 
@@ -39,7 +39,7 @@ CoteList GetLCFromPoly(std::vector<Vertex> Poly)
 	}
 
 	//boucler la boucle des côtés en mettant le dernier côté stocké en premier de la listes
-
+	*/
 	return LC;
 }
 
@@ -162,7 +162,7 @@ std::vector<Vertex> Remplissage(std::vector<Vertex> Poly)
 
 	double xMin, xMax, currX, currY;
 
-	for (currY = rect[0].y; currY < rect[2].y; ++currY)
+	for (currY = rect[0].y; currY < rect[2].y; currY += 0.01f)
 	{
 		currLine = GetCurrentLineFromRect(rect, currY); //récupère la ligne courante
 		intersections = FindIntersectionWithLine(currLine, Poly); //récupère les intersections entre la ligne et le poly
