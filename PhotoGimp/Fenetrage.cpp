@@ -136,10 +136,5 @@ std::vector<Vertex> Fenetrage(std::vector<Vertex> PL_Forme, std::vector<Vertex> 
 	}
 	newPolygon.resize(newPolygonSize);
 
-	for (int i = 0; i < newPolygonSize; ++i)
-	{
-		newPolygon[i].CastToInt(newPolygon[i]);
-	}
-
 	return newPolygon;
 }

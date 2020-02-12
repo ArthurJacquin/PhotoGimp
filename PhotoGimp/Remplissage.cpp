@@ -1,4 +1,7 @@
 #include "Remplissage.h"
+#include <algorithm> 
+
+bool sortVertex(Vertex i, Vertex j) { return (i.x < j.x); }
 
 std::vector<Vertex> RectEG(std::vector<Vertex> Poly)
 {
@@ -81,18 +84,21 @@ std::vector<Vertex> FindIntersectionWithLine(std::vector<Vertex> rect, std::vect
 		//mettre à jour P3 et P4
 		P3.x = Poly[i].x;
 		P3.y = Poly[i].y;
-		P3.CastToInt(P3);
 		P4.x = Poly[j].x;
 		P4.y = Poly[j].y;
-		P4.CastToInt(P4);
 		Vertex intersectionPoint = intersection(P1, P2, P3, P4); //intersection entre la ligne et le côté du poly
+
+		double yMax = P3.y > P4.y ? P3.y : P4.y;
+		double yMin = P3.y < P4.y ? P3.y : P4.y;
 
 		std::cout << "Intersection en y : " << Line[0].y << " => " << intersectionPoint << std::endl;
 
 		if(intersectionPoint.x < rect[0].x 
 		|| intersectionPoint.x > rect[2].x
 		|| intersectionPoint.y < rect[0].y
-		|| intersectionPoint.y > rect[2].y) 
+		|| intersectionPoint.y > rect[2].y
+		|| intersectionPoint.y < yMin
+		|| intersectionPoint.y > yMax)
 		{
 			continue;
 		}
@@ -100,9 +106,12 @@ std::vector<Vertex> FindIntersectionWithLine(std::vector<Vertex> rect, std::vect
 		intersections.push_back(intersectionPoint); //ajouter l'intersection à la liste des intersections
 		std::cout << "Intersection validéééééée" << std::endl;
 	}
-
+	
+	std::sort(intersections.begin(), intersections.end(), sortVertex);
 	return intersections;
 }
+
+
 
 std::vector<Vertex> DebugRemplissage(std::vector<Vertex> Poly)
 {
@@ -114,6 +123,7 @@ std::vector<Vertex> DebugRemplissage(std::vector<Vertex> Poly)
 	std::vector<Vertex> currLine; //stockage de la ligne actuelle
 	std::vector<Vertex> intersections; //stockage des intersections par ligne
 	int nbIntersections = 0; //nombre d'intersections par ligne
+	
 
 	double currY;
 
@@ -122,6 +132,16 @@ std::vector<Vertex> DebugRemplissage(std::vector<Vertex> Poly)
 		currLine = GetCurrentLineFromRect(rect, currY); //récupère la ligne courante via la coordonnée en double
 		intersections = FindIntersectionWithLine(rect, currLine, Poly); //récupère les intersections entre la ligne et le poly
 		nbIntersections = intersections.size(); //nombre d'intersections
+
+		if (nbIntersections == 1)
+			continue;
+
+		if (nbIntersections % 2 != 0) {
+			verticesToDraw.push_back(intersections[0]);
+			verticesToDraw.push_back(intersections.back());
+			continue;
+		}
+
 		for (int i = 0; i < nbIntersections; ++i)
 		{
 			verticesToDraw.push_back(intersections[i]);
@@ -130,3 +150,5 @@ std::vector<Vertex> DebugRemplissage(std::vector<Vertex> Poly)
 
 	return verticesToDraw;
 }
+
+
