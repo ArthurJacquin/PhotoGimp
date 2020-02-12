@@ -11,6 +11,8 @@ public:
 	static void waitForBool();
 	static void deleteVertex();
 	static void decoupeForme();
+	static void drawCircle(Vertex center, Vertex FirstPoint, int nbPoints);
+
 	static void mouse_button_callback(GLFWwindow* window, int button, int action, int mods);
 	static void keyboard_button_callback(GLFWwindow* window, int key, int scancode, int action, int mods);
 };
