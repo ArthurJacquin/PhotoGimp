@@ -26,6 +26,7 @@ extern bool clickMenuFenetre;
 extern bool clickMenuDecoupe;
 extern bool clickMenuRemplissage;
 extern bool clickDelete;
+extern bool clickCercle;
 
 extern Color choosedColor;
 
@@ -39,6 +40,16 @@ void Input::waitForBool()
 		clickMenuFenetre = false;
 		clickMenuRemplissage = false;
 		clickDelete = false;
+		clickCercle = false;
+	}
+	if (clickCercle == true)
+	{
+		clickCercle = true;
+		canCreatePoint = true;
+		clickMenuForme = false;
+		clickMenuFenetre = false;
+		clickMenuRemplissage = false;
+		clickDelete = false;
 	}
 	else if (clickMenuFenetre == true)
 	{
@@ -48,6 +59,7 @@ void Input::waitForBool()
 		clickMenuFenetre = true;
 		clickMenuRemplissage = false;
 		clickDelete = false;
+		clickCercle = false;
 	}
 	else if (clickMenuRemplissage == true)
 	{
@@ -66,6 +78,7 @@ void Input::waitForBool()
 		clickMenuFenetre = false;
 		clickMenuRemplissage = false;
 		clickDelete = false;
+		clickCercle = false;
 	}
 	else if (clickDelete == true)
 	{
@@ -75,6 +88,7 @@ void Input::waitForBool()
 		clickMenuFenetre = false;
 		clickMenuRemplissage = false;
 		clickDelete = true;
+		clickCercle = false;
 	}
 }
 
@@ -194,7 +208,7 @@ void Input::drawCircle(Vertex center, Vertex FirstPoint, int nbPoints)
 
 	for (int i = 0; i < nbPoints; ++i)
 	{
-		Vertex newPoint(0, 0, 1, 0, 0);
+		Vertex newPoint(0, 0, choosedColor.x, choosedColor.y, choosedColor.z);
 
 		float theta = 2.0f * M_PI * float(i) / float(nbPoints);
 		float x = radius * cosf(theta);//calculate the x component 
@@ -229,7 +243,7 @@ void Input::mouse_button_callback(GLFWwindow * window, int button, int action, i
 				Vertex newPoint = Vertex(-1.0f + 2 * xpos / width, 1.0f - 2 * ypos / height, choosedColor.x, choosedColor.y, choosedColor.z);
 				vertices.push_back(newPoint);
 
-				if (clickMenuForme == true)
+				if (clickMenuForme == true || clickCercle == true)
 				{
 					tabMenuFormeVertices.push_back(newPoint);
 
@@ -241,14 +255,6 @@ void Input::mouse_button_callback(GLFWwindow * window, int button, int action, i
 					std::cerr << "Point Vertices : " << newPoint << std::endl;
 				}
 			}
-		}
-	}
-
-	if (button == GLFW_MOUSE_BUTTON_RIGHT && action == GLFW_PRESS)
-	{
-		if (vertices.empty() == false)
-		{
-			vertices.pop_back();
 		}
 	}
 }
@@ -263,6 +269,12 @@ void Input::keyboard_button_callback(GLFWwindow* window, int key, int scancode, 
 				idFisrtVertexForme.push_back(0);
 			else
 				idFisrtVertexForme.push_back(shapesSizes.back() + idFisrtVertexForme.back());
+
+			int sumVerticesInShapes = 0;
+			for (int i = 0; i < shapesSizes.size(); ++i)
+				sumVerticesInShapes += shapesSizes[i];
+
+			shapesSizes.push_back(vertices.size() - sumVerticesInShapes);
 		}
 		else if (clickMenuFenetre)
 		{
@@ -270,13 +282,25 @@ void Input::keyboard_button_callback(GLFWwindow* window, int key, int scancode, 
 				idFisrtVertexFenetre.push_back(0);
 			else
 				idFisrtVertexFenetre.push_back(shapesSizes.back() + idFisrtVertexFenetre.back());
+
+			int sumVerticesInShapes = 0;
+			for (int i = 0; i < shapesSizes.size(); ++i)
+				sumVerticesInShapes += shapesSizes[i];
+
+			shapesSizes.push_back(vertices.size() - sumVerticesInShapes);
 		}
+		else if (clickCercle)
+		{
+			int sumVerticesInShapes = 0;
+			for (int i = 0; i < shapesSizes.size(); ++i)
+				sumVerticesInShapes += shapesSizes[i];
 
-		int sumVerticesInShapes = 0;
-		for (int i = 0; i < shapesSizes.size(); ++i)
-			sumVerticesInShapes += shapesSizes[i];
+			if (vertices.size() - sumVerticesInShapes == 2);
+			{
+				drawCircle(vertices[vertices.size() - 2], vertices.back(), 45);
+			}
 
-		shapesSizes.push_back(vertices.size() - sumVerticesInShapes);
+		}
 
 		canCreatePoint = false;
 		clickMenuForme = false;
@@ -284,6 +308,7 @@ void Input::keyboard_button_callback(GLFWwindow* window, int key, int scancode, 
 		clickMenuRemplissage = false;
 		clickMenuDecoupe = false;
 		clickDelete = false;
+		clickCercle = false;
 	}
 
 	if (key == GLFW_KEY_C && action == GLFW_PRESS)
@@ -301,7 +326,7 @@ void Input::keyboard_button_callback(GLFWwindow* window, int key, int scancode, 
 			clickMenuFenetre = false;
 			clickMenuRemplissage = false;
 			clickMenuDecoupe = false;
-			clickDelete = false;
+			//clickDelete = false;
 		}
 	}
 

@@ -51,6 +51,7 @@ bool clickMenuFenetre = false;
 bool clickMenuRemplissage = false;
 bool clickDelete = false;
 bool clickMenuDecoupe = false;
+bool clickCercle = false;
 
 int width = 800;
 int height = 800;
@@ -166,7 +167,7 @@ void displayGUI()
 	ImGui_ImplOpenGL3_NewFrame();
 	ImGui_ImplGlfw_NewFrame();
 	ImGui::NewFrame();
-	ImGui::SetNextWindowSize(ImVec2(220, 550));
+	ImGui::SetNextWindowSize(ImVec2(220, 570));
 	// render your GUI
 	ImGui::Begin("PhotoGimp", 0, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse);
 	ImGui::TextColored(ImVec4(0.9, 0.1, 0.1, 1.0), "  Bienvenue dans PhotoGimp ");
@@ -174,13 +175,6 @@ void displayGUI()
 	ImGui::Text("Vous pouvez creer plusieurs");
 	ImGui::Text("formes et les decouper avec");
 	ImGui::Text("      des fenetres");
-	ImGui::Text(" ");
-	ImGui::Text(" -------------------------  ");
-	ImGui::Text(" ");
-	ImGui::Text("Pour ajouter un point : ");
-	ImGui::Text("     click gauche ");
-	ImGui::Text("Pour supprimer un point : ");
-	ImGui::Text("     click droit ");
 	ImGui::Text(" ");
 	ImGui::Text(" -------------------------  ");
 	ImGui::Text("  Choississez une couleur");
@@ -199,6 +193,10 @@ void displayGUI()
 	if (ImGui::Button("Tracer une forme"))
 	{
 		clickMenuForme = true;
+	}
+	if (ImGui::Button("Tracer un cercle"))
+	{
+		clickCercle = true;
 	}
 
 	if (ImGui::Button("Tracer une fenetre"))
