@@ -151,9 +151,6 @@
   <ItemGroup>
     <ClInclude Include="..\common\GLShader.h" />
     <ClInclude Include="Color.h" />
-    <ClInclude Include="Converter.h" />
-    <ClInclude Include="CoteActif.h" />
-    <ClInclude Include="CoteList.h" />
     <ClInclude Include="Fenetrage.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="Remplissage.h" />
@@ -164,9 +161,6 @@
   <ItemGroup>
     <ClCompile Include="..\common\GLShader.cpp" />
     <ClCompile Include="Color.cpp" />
-    <ClCompile Include="Converter.cpp" />
-    <ClCompile Include="CoteActif.cpp" />
-    <ClCompile Include="CoteList.cpp" />
     <ClCompile Include="Fenetrage.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="PhotoGimp.cpp" />

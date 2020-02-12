@@ -21,8 +21,6 @@ extern std::vector<Vertex> tabMenuFenetreVertices;
 extern std::vector<int> idFisrtVertexFenetre;
 extern UI button;
 
-//extern std::vector<Vertex> rectangleEnglobant;
-
 bool canCreatePoint = false;
 
 extern bool clickMenuForme;
@@ -202,18 +200,19 @@ void Input::decoupeForme()
 
 void Input::remplirForme()
 {
-	//vertices = RectEG(vertices);
-	//rectangleEnglobant = RectEG(vertices);
-	/*for (int i = 0; i < rectangleEnglobant.size(); ++i)
-	{
-		vertices.push_back(rectangleEnglobant[i]);
-	}*/
-	verticesToDraw = Remplissage(vertices);
+	std::cout << "Remplir ! " << std::endl;
+
+	verticesToDraw = DebugRemplissage(vertices); 
 	for (int i = 0; i < verticesToDraw.size(); ++i)
 	{
 		vertices.push_back(verticesToDraw[i]);
 	}
-	
+
+	int size = 2;
+	for (int j = 0; j < verticesToDraw.size() * 0.5f; ++j)
+	{
+		shapesSizes.push_back(size);
+	}
 }
 
 void Input::drawCircle(Vertex center, Vertex FirstPoint, int nbPoints)
@@ -262,7 +261,6 @@ void Input::mouse_button_callback(GLFWwindow * window, int button, int action, i
 			{
 				Vertex newPoint = Vertex(-1.0f + 2 * xpos / width, 1.0f - 2 * ypos / height, choosedColor.x, choosedColor.y, choosedColor.z);
 				std::cout << newPoint << std::endl;
-				//Vertex newPoint = Vertex(xpos, ypos, choosedColor.x, choosedColor.y, choosedColor.z);
 				vertices.push_back(newPoint);
 
 				if (clickMenuForme == true || clickCercle == true)
