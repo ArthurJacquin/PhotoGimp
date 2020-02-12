@@ -127,7 +127,7 @@ std::vector<Vertex> FindIntersectionWithLine(std::vector<Vertex> Line, std::vect
 
 	/*while (currCote != last) //itérer sur la liste des côtés du poly 
 	{
-		//mettre à jour P3 et P4
+		//mettre à jour P3 et P4 et recalculer les coord en int
 		currCote = currCote->GetNextCote();
 		intersections.push_back(intersection(P1, P2, P3, P4)); //ajouter l'intersection à la liste des intersections
 	}*/

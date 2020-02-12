@@ -25,7 +25,13 @@ Vertex::Vertex(double x, double y, float r, float g, float b, int x_int, int y_i
 {
 }
 
-void Vertex::CastToDouble(Vertex& v, int int_x, int int_y)
+void Vertex::CastToInt(Vertex& v)
+{
+	v.x_int = ((v.x / 2) * width) + 1.0f;
+	v.y_int = ((v.y / 2) * height) + 1.0f;
+}
+
+void Vertex::CastToDouble(Vertex& v, int int_x, int int_y) //TODO : voir pour les éventuelles pertes de données
 {
 	v.x = (double)(-1.0f + 2 * int_x / width);
 	v.y = (double)(1.0f - 2 * int_y / height);
