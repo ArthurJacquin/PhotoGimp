@@ -9,6 +9,8 @@
 #include "Color.h"
 #include "imgui.h"
 
+# define M_PI           3.14159265358979323846  /* pi */
+
 extern int width, height;
 extern std::vector<Vertex> vertices;
 extern std::vector<Vertex> verticesToDraw;
@@ -150,7 +152,7 @@ void Input::decoupeForme()
 				//Fenetrage de cette forme
 				std::vector<Vertex> newForme = Fenetrage(forme, fenetre);
 
-				//Enregistrement de la forme découpé
+				//Enregistrement de la forme dï¿½coupï¿½
 				for (int k = 0; k < newForme.size(); ++k)
 				{
 					newVertices.push_back(newForme[k]);
@@ -198,6 +200,39 @@ void Input::remplirForme()
 		vertices.push_back(verticesToDraw[i]);
 	}
 	
+}
+
+void Input::drawCircle(Vertex center, Vertex FirstPoint, int nbPoints)
+{
+	float radius = sqrt(pow(FirstPoint.x - center.x, 2) + pow(FirstPoint.y - center.y, 2));
+
+	vertices.pop_back();
+	vertices.pop_back();
+	
+	tabMenuFormeVertices.pop_back();
+	tabMenuFormeVertices.pop_back();
+
+	for (int i = 0; i < nbPoints; ++i)
+	{
+		Vertex newPoint(0, 0, 1, 0, 0);
+
+		float theta = 2.0f * M_PI * float(i) / float(nbPoints);
+		float x = radius * cosf(theta);//calculate the x component 
+		float y = radius * sinf(theta);//calculate the y component 
+
+		newPoint.x = x + center.x;
+		newPoint.y = y + center.y;
+
+		tabMenuFormeVertices.push_back(newPoint);
+		vertices.push_back(newPoint);
+	}
+
+	if (idFisrtVertexForme.size() == 0)
+		idFisrtVertexForme.push_back(0);
+	else
+		idFisrtVertexForme.push_back(shapesSizes.back() + idFisrtVertexForme.back());
+
+	shapesSizes.push_back(nbPoints);
 }
 
 void Input::mouse_button_callback(GLFWwindow * window, int button, int action, int mods)
@@ -273,6 +308,25 @@ void Input::keyboard_button_callback(GLFWwindow* window, int key, int scancode, 
 		clickDelete = false;
 	}
 
+	if (key == GLFW_KEY_C && action == GLFW_PRESS)
+	{
+		int sumVerticesInShapes = 0;
+		for (int i = 0; i < shapesSizes.size(); ++i)
+			sumVerticesInShapes += shapesSizes[i];
+
+		if(vertices.size() - sumVerticesInShapes == 2);
+		{
+			drawCircle(vertices[vertices.size() - 2], vertices.back(), 45);
+
+			canCreatePoint = false;
+			clickMenuForme = false;
+			clickMenuFenetre = false;
+			clickMenuRemplissage = false;
+			clickMenuDecoupe = false;
+			clickDelete = false;
+		}
+	}
+
 	if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
 	{
 		deleteVertex();
@@ -298,14 +352,14 @@ void Input::keyboard_button_callback(GLFWwindow* window, int key, int scancode, 
 		vertices.push_back(v);
 	}
 
-	if (key == GLFW_KEY_C && action == GLFW_PRESS)
-	{
-		/*Vertex a(0, 0, 1, 1, 1);
-		Vertex b(0, 1, 1, 1, 1);
-		Vertex c(1, 0, 1, 1, 1);
-		Vertex d(1, 1, 1, 1, 1);*/
-		std::cout << coupe(vertices[0], vertices[1], vertices[2], vertices[3]);
-	}
+	//if (key == GLFW_KEY_C && action == GLFW_PRESS)
+	//{
+	//	/*Vertex a(0, 0, 1, 1, 1);
+	//	Vertex b(0, 1, 1, 1, 1);
+	//	Vertex c(1, 0, 1, 1, 1);
+	//	Vertex d(1, 1, 1, 1, 1);*/
+	//	std::cout << coupe(vertices[0], vertices[1], vertices[2], vertices[3]);
+	//}
 }
 
 

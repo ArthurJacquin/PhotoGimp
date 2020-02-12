@@ -55,8 +55,8 @@ bool clickMenuRemplissage = false;
 bool clickDelete = false;
 bool clickMenuDecoupe = false;
 
-int width = 1024;
-int height = 512;
+int width = 800;
+int height = 800;
 
 bool Initialise() {
 
@@ -246,7 +246,7 @@ int main(void)
 		return -1;
 
 	/* Create a windowed mode window and its OpenGL context */
-	window = glfwCreateWindow(1024, 600, "PhotoGimp", NULL, NULL);
+	window = glfwCreateWindow(width, height, "PhotoGimp", NULL, NULL);
 	InitialiseGUI(window);
 
 	if (!window)
