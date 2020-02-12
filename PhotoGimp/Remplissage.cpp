@@ -116,8 +116,14 @@ std::vector<Vertex> FindIntersectionWithLine(std::vector<Vertex> Line, std::vect
 	Vertex P3 = { 0.f, 0.f, 0.f, 1.f, 1.f }; //premier point du côté 
 	Vertex P4 = { 0.f, 0.f, 0.f, 1.f, 1.f }; //deuxième point du côté
 
+	/*std::vector<int> P1int = ConvertCoordToInt(P1);
+	std::vector<int> P2int = ConvertCoordToInt(P2);
+	std::vector<int> P3int = ConvertCoordToInt(P3);
+	std::vector<int> P4int = ConvertCoordToInt(P4);*/
+
 	int j = 0;
 	double currY = Line[0].y;
+	//int currY = P1int[1];
 
 	/*while (currCote != last) //itérer sur la liste des côtés du poly 
 	{
@@ -149,53 +155,60 @@ std::vector<Vertex> FindIntersectionWithLine(std::vector<Vertex> Line, std::vect
 
 std::vector<Vertex> Remplissage(std::vector<Vertex> Poly)
 {
-	std::cout << "Hello from Remplissage" << std::endl;
+	//std::cout << "Hello from Remplissage" << std::endl;
 
 	std::vector<Vertex> polyFilled;
 
-	std::vector<Vertex> rect = RectEG(Poly);
-	std::vector<Vertex> currLine;
-	std::vector<Vertex> intersections;
-	Vertex P = { 0.f, 0.f, 0.f, 1.f, 1.f };
-	int nbIntersections = 0;
-	int currIntersection = 0;
+	//std::vector<Vertex> rect = RectEG(Poly);
+	////std::vector<int> rectInt;
 
-	double xMin, xMax, currX, currY;
+	////for (int i = 0; i < rect.size(); ++i)
+	////{
+	////	//rectInt.push_back(ConvertCoordToInt(rect[i]);)
+	////}
+	//std::vector<Vertex> currLine;
+	//std::vector<Vertex> intersections;
+	//Vertex P = { 0.f, 0.f, 0.f, 1.f, 1.f };
+	//int nbIntersections = 0;
+	//int currIntersection = 0;
 
-	for (currY = rect[0].y; currY < rect[2].y; currY += 0.001f)
-	{
-		currLine = GetCurrentLineFromRect(rect, currY); //récupère la ligne courante
-		intersections = FindIntersectionWithLine(currLine, Poly); //récupère les intersections entre la ligne et le poly
-		nbIntersections = intersections.size(); //nombre d'intersections
-		currIntersection = 0; //id de l'intersection courante
+	//double xMin, xMax, currX, currY;
+	//int xMinInt, xMaxInt, currXInt, currYInt;
 
-		while (currIntersection < nbIntersections) //tant qu'on a pas parcouru toutes les intersections
-		{
-			xMin = intersections[currIntersection].x; //on récupère le x min de la zone entre les deux intersections
-			++currIntersection; //on passe à l'intersection suivante
+	//for (currYInt = rect[0].y; currY < rect[2].y; currY += 0.001f)
+	//{
+	//	currLine = GetCurrentLineFromRect(rect, currY); //récupère la ligne courante
+	//	intersections = FindIntersectionWithLine(currLine, Poly); //récupère les intersections entre la ligne et le poly
+	//	nbIntersections = intersections.size(); //nombre d'intersections
+	//	currIntersection = 0; //id de l'intersection courante
 
-			if (currIntersection != nbIntersections) //si on est pas dans la dernière zone
-			{
-				xMax = intersections[currIntersection].x; //on récupère le x max de la zone entre les deux intersections
+	//	while (currIntersection < nbIntersections) //tant qu'on a pas parcouru toutes les intersections
+	//	{
+	//		xMin = intersections[currIntersection].x; //on récupère le x min de la zone entre les deux intersections
+	//		++currIntersection; //on passe à l'intersection suivante
 
-				for (currX = xMin; currX < xMax; ++currX) //on parcoure tous les points à l'ordonnée currY qui sont dans la zone
-				{
-					P.x = currX;
-					P.y = currY;
-					polyFilled.push_back(P); //on ajoute ce point à la liste finale des points à dessiner
-				}
-				++currIntersection; //on passe à l'intersection suivante
-			}
-		}
-		intersections.clear();
-		currLine.clear();
-	}
+	//		if (currIntersection != nbIntersections) //si on est pas dans la dernière zone
+	//		{
+	//			xMax = intersections[currIntersection].x; //on récupère le x max de la zone entre les deux intersections
 
-	for (int i = 0; i < polyFilled.size(); ++i)
-	{
-		std::cout << "Points à remplir : " << std::endl;
-		std::cout << polyFilled[i] << std::endl;
-	}
+	//			for (currX = xMin; currX < xMax; ++currX) //on parcoure tous les points à l'ordonnée currY qui sont dans la zone
+	//			{
+	//				P.x = currX;
+	//				P.y = currY;
+	//				polyFilled.push_back(P); //on ajoute ce point à la liste finale des points à dessiner
+	//			}
+	//			++currIntersection; //on passe à l'intersection suivante
+	//		}
+	//	}
+	//	intersections.clear();
+	//	currLine.clear();
+	//}
+
+	//for (int i = 0; i < polyFilled.size(); ++i)
+	//{
+	//	std::cout << "Points à remplir : " << std::endl;
+	//	std::cout << polyFilled[i] << std::endl;
+	//}
 
 	return polyFilled;
 }

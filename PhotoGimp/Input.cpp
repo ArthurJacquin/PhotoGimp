@@ -128,6 +128,8 @@ void Input::mouse_button_callback(GLFWwindow * window, int button, int action, i
 			if (xpos > 220)
 			{
 				Vertex newPoint = Vertex(-1.0f + 2 * xpos / width, 1.0f - 2 * ypos / height, choosedColor.x, choosedColor.y, choosedColor.z);
+				std::cout << newPoint << std::endl;
+				//Vertex newPoint = Vertex(xpos, ypos, choosedColor.x, choosedColor.y, choosedColor.z);
 				vertices.push_back(newPoint);
 
 				if (clickMenuForme == true)
