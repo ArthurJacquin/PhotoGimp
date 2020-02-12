@@ -1,21 +1,52 @@
-﻿C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(452,5): warning MSB8028: The intermediate directory (x64\Debug\) contains files shared from another project (PremierProjet.vcxproj).  This can lead to incorrect clean and rebuild behavior.
+﻿D:\Programmes de cours\IDEs\Microsoft Visual Studio\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(459,5): warning MSB8028: The intermediate directory (x64\Debug\) contains files shared from another project (PremierProjet.vcxproj).  This can lead to incorrect clean and rebuild behavior.
+  Fenetrage.cpp
+D:\Projets\Maths\PhotoGimp - Copie\PhotoGimp\Fenetrage.cpp(21,11): warning C4244: 'initialisation' : conversion de 'double' en 'float', perte possible de données
+D:\Projets\Maths\PhotoGimp - Copie\PhotoGimp\Fenetrage.cpp(22,11): warning C4244: 'initialisation' : conversion de 'double' en 'float', perte possible de données
+D:\Projets\Maths\PhotoGimp - Copie\PhotoGimp\Fenetrage.cpp(46,55): warning C4244: '+=' : conversion de 'double' en 'float', perte possible de données
+D:\Projets\Maths\PhotoGimp - Copie\PhotoGimp\Fenetrage.cpp(89,38): warning C4267: 'initialisation' : conversion de 'size_t' en 'int', perte possible de données
+  Input.cpp
+D:\Projets\Maths\PhotoGimp - Copie\PhotoGimp\CoteActif.h(14,34): warning C4227: anachronisme utilisé : qualificateurs de référence ignorés
+D:\Projets\Maths\PhotoGimp - Copie\PhotoGimp\CoteActif.h(20,40): warning C4227: anachronisme utilisé : qualificateurs de référence ignorés
+D:\Projets\Maths\PhotoGimp - Copie\PhotoGimp\CoteList.h(13,33): warning C4227: anachronisme utilisé : qualificateurs de référence ignorés
+D:\Projets\Maths\PhotoGimp - Copie\PhotoGimp\CoteList.h(16,41): warning C4227: anachronisme utilisé : qualificateurs de référence ignorés
+D:\Projets\Maths\PhotoGimp - Copie\PhotoGimp\CoteList.h(17,39): warning C4227: anachronisme utilisé : qualificateurs de référence ignorés
+D:\Projets\Maths\PhotoGimp - Copie\PhotoGimp\CoteList.h(18,42): warning C4227: anachronisme utilisé : qualificateurs de référence ignorés
+D:\Projets\Maths\PhotoGimp - Copie\PhotoGimp\Color.h(12,34): warning C4042: 'b' : classe de stockage incorrecte
+D:\Projets\Maths\PhotoGimp - Copie\PhotoGimp\Input.cpp(167,42): warning C4267: 'argument' : conversion de 'size_t' en '_Ty', perte possible de données
+          with
+          [
+              _Ty=int
+          ]
+D:\Projets\Maths\PhotoGimp - Copie\PhotoGimp\Input.cpp(207,15): warning C4244: 'initialisation' : conversion de 'double' en 'float', perte possible de données
+D:\Projets\Maths\PhotoGimp - Copie\PhotoGimp\Input.cpp(219,15): warning C4244: 'initialisation' : conversion de 'double' en 'float', perte possible de données
+D:\Projets\Maths\PhotoGimp - Copie\PhotoGimp\Input.cpp(301,62): warning C4267: 'argument' : conversion de 'size_t' en '_Ty', perte possible de données
+          with
+          [
+              _Ty=int
+          ]
+D:\Projets\Maths\PhotoGimp - Copie\PhotoGimp\Input.cpp(317,49): warning C4390: ';' : une instruction contrôlée a été trouvée vide ; est-ce ce que vous souhaitiez ?
   PhotoGimp.cpp
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\shared\minwindef.h(130,1): warning C4005: 'APIENTRY' : redéfinition de macro
+D:\Projets\Maths\PhotoGimp - Copie\libs\glfw-3.3\include\GLFW\glfw3.h(104): message : voir la définition précédente de 'APIENTRY'
+D:\Projets\Maths\PhotoGimp - Copie\PhotoGimp\Color.h(12,34): warning C4042: 'b' : classe de stockage incorrecte
+D:\Projets\Maths\PhotoGimp - Copie\PhotoGimp\PhotoGimp.cpp(81,15): warning C4244: 'argument' : conversion de 'GLuint64' en 'GLuint', perte possible de données
+D:\Projets\Maths\PhotoGimp - Copie\PhotoGimp\PhotoGimp.cpp(151,64): warning C4267: 'argument' : conversion de 'size_t' en 'GLsizei', perte possible de données
+D:\Projets\Maths\PhotoGimp - Copie\PhotoGimp\PhotoGimp.cpp(175,46): warning C4305: 'argument' : troncation de 'double' à 'float'
+  Remplissage.cpp
+D:\Projets\Maths\PhotoGimp - Copie\PhotoGimp\CoteActif.h(14,34): warning C4227: anachronisme utilisé : qualificateurs de référence ignorés
+D:\Projets\Maths\PhotoGimp - Copie\PhotoGimp\CoteActif.h(20,40): warning C4227: anachronisme utilisé : qualificateurs de référence ignorés
+D:\Projets\Maths\PhotoGimp - Copie\PhotoGimp\CoteList.h(13,33): warning C4227: anachronisme utilisé : qualificateurs de référence ignorés
+D:\Projets\Maths\PhotoGimp - Copie\PhotoGimp\CoteList.h(16,41): warning C4227: anachronisme utilisé : qualificateurs de référence ignorés
+D:\Projets\Maths\PhotoGimp - Copie\PhotoGimp\CoteList.h(17,39): warning C4227: anachronisme utilisé : qualificateurs de référence ignorés
+D:\Projets\Maths\PhotoGimp - Copie\PhotoGimp\CoteList.h(18,42): warning C4227: anachronisme utilisé : qualificateurs de référence ignorés
+D:\Projets\Maths\PhotoGimp - Copie\PhotoGimp\Remplissage.cpp(251,22): warning C4244: '=' : conversion de 'double' en 'int', perte possible de données
+D:\Projets\Maths\PhotoGimp - Copie\PhotoGimp\Remplissage.cpp(249,12): warning C4101: 'xMax' : variable locale non référencée
+D:\Projets\Maths\PhotoGimp - Copie\PhotoGimp\Remplissage.cpp(249,6): warning C4101: 'xMin' : variable locale non référencée
+D:\Projets\Maths\PhotoGimp - Copie\PhotoGimp\Remplissage.cpp(249,18): warning C4101: 'currX' : variable locale non référencée
   Vertex.cpp
+D:\Projets\Maths\PhotoGimp - Copie\PhotoGimp\Vertex.cpp(19,28): warning C4244: '=' : conversion de 'double' en 'int', perte possible de données
+D:\Projets\Maths\PhotoGimp - Copie\PhotoGimp\Vertex.cpp(20,29): warning C4244: '=' : conversion de 'double' en 'int', perte possible de données
+D:\Projets\Maths\PhotoGimp - Copie\PhotoGimp\Vertex.cpp(30,32): warning C4244: '=' : conversion de 'double' en 'int', perte possible de données
+D:\Projets\Maths\PhotoGimp - Copie\PhotoGimp\Vertex.cpp(31,33): warning C4244: '=' : conversion de 'double' en 'int', perte possible de données
   Génération de code en cours...
-C:\Users\artj3\Documents\Cours\4A ESGI\Math\PhotoGimp\PhotoGimp\PhotoGimp.cpp(65,15): warning C4244: 'argument' : conversion de 'GLuint64' en 'GLuint', perte possible de données
-MSVCRTD.lib(initializers.obj) : warning LNK4098: conflit entre la bibliothÞque par dÚfaut 'libcmt.lib' et les autres bibliothÞquesá; utilisez /NODEFAULTLIB:library
-LINK : warning LNK4286: le symbole '__glewAttachShader' dÚfini dans 'glew32s.lib(glew.obj)' est importÚ par 'GLShader.obj'
-LINK : warning LNK4286: le symbole '__glewCompileShader' dÚfini dans 'glew32s.lib(glew.obj)' est importÚ par 'GLShader.obj'
-LINK : warning LNK4286: le symbole '__glewCreateProgram' dÚfini dans 'glew32s.lib(glew.obj)' est importÚ par 'GLShader.obj'
-LINK : warning LNK4286: le symbole '__glewCreateShader' dÚfini dans 'glew32s.lib(glew.obj)' est importÚ par 'GLShader.obj'
-LINK : warning LNK4286: le symbole '__glewDeleteProgram' dÚfini dans 'glew32s.lib(glew.obj)' est importÚ par 'GLShader.obj'
-LINK : warning LNK4286: le symbole '__glewDeleteShader' dÚfini dans 'glew32s.lib(glew.obj)' est importÚ par 'GLShader.obj'
-LINK : warning LNK4286: le symbole '__glewDetachShader' dÚfini dans 'glew32s.lib(glew.obj)' est importÚ par 'GLShader.obj'
-LINK : warning LNK4286: le symbole '__glewGetProgramInfoLog' dÚfini dans 'glew32s.lib(glew.obj)' est importÚ par 'GLShader.obj'
-LINK : warning LNK4286: le symbole '__glewGetProgramiv' dÚfini dans 'glew32s.lib(glew.obj)' est importÚ par 'GLShader.obj'
-LINK : warning LNK4286: le symbole '__glewGetShaderInfoLog' dÚfini dans 'glew32s.lib(glew.obj)' est importÚ par 'GLShader.obj'
-LINK : warning LNK4286: le symbole '__glewGetShaderiv' dÚfini dans 'glew32s.lib(glew.obj)' est importÚ par 'GLShader.obj'
-LINK : warning LNK4286: le symbole '__glewLinkProgram' dÚfini dans 'glew32s.lib(glew.obj)' est importÚ par 'GLShader.obj'
-LINK : warning LNK4286: le symbole '__glewShaderSource' dÚfini dans 'glew32s.lib(glew.obj)' est importÚ par 'GLShader.obj'
-glew32s.lib(glew.obj) : warning LNK4099: PDB 'vc120.pdb' n'a pu Ûtre trouvÚ avec 'glew32s.lib(glew.obj)' ou sur 'C:\Users\artj3\Documents\Cours\4A ESGI\Math\PhotoGimp\x64\Debug\vc120.pdb'á; l'objet sera liÚ sans informations de dÚbogage
-  PhotoGimp.vcxproj -> C:\Users\artj3\Documents\Cours\4A ESGI\Math\PhotoGimp\x64\Debug\PhotoGimp.exe
+  PhotoGimp.vcxproj -> D:\Projets\Maths\PhotoGimp - Copie\x64\Debug\PhotoGimp.exe
