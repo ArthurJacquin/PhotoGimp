@@ -114,25 +114,8 @@ std::vector<Vertex> Remplissage(std::vector<Vertex> Poly)
 		intersections = FindIntersectionWithLine(rect, currLine, Poly); //récupère les intersections entre la ligne et le poly
 		nbIntersections = intersections.size(); //nombre d'intersections
 
-		if (nbIntersections == 1)
+		if (nbIntersections == 1 || nbIntersections % 2 != 0)
 			continue;
-
-		if (nbIntersections % 2 != 0) 
-		{
-			/*for (int i = 0; i < Poly.size(); ++i)
-			{
-				for (int j = 0; j < intersections.size(); ++j)
-				{
-					float distance = sqrt(pow(Poly[i].x - intersections[j].x, 2) + pow(Poly[i].y - intersections[j].y, 2));
-					if (distance < FLT_EPSILON) 
-					{
-						intersections.erase(intersections.begin() + j);
-						nbIntersections--;
-						break;
-					}
-				}
-			}*/
-		}
 
 		for (int i = 0; i < nbIntersections; ++i)
 		{
