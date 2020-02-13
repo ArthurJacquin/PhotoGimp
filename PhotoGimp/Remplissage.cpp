@@ -5,8 +5,6 @@ bool sortVertex(Vertex i, Vertex j) { return (i.x < j.x); }
 
 std::vector<Vertex> RectEG(std::vector<Vertex> Poly)
 {
-	std::cout << "Hello from RectEG" << std::endl;
-
 	std::vector<Vertex> rect;
 	double yMax = 0.f;
 	double yMin = 1000.0f;
@@ -35,18 +33,11 @@ std::vector<Vertex> RectEG(std::vector<Vertex> Poly)
 	rect.push_back(P3);
 	rect.push_back(P4);
 
-	std::cout << "Point 1 du rectangle englobant : " << P1 << std::endl;
-	std::cout << "Point 2 du rectangle englobant : " << P2 << std::endl;
-	std::cout << "Point 3 du rectangle englobant : " << P3 << std::endl;
-	std::cout << "Point 4 du rectangle englobant : " << P4 << std::endl;
-
 	return rect;
 }
 
 std::vector<Vertex> GetCurrentLineFromRect(std::vector<Vertex> rect, double y)
 {
-	std::cout << "Find current line at : " << y << std::endl;
-
 	std::vector<Vertex> line;
 	
 	Vertex P1 = Vertex(rect[0].x, y, 0.f, 1.f, 1.f);
@@ -55,16 +46,11 @@ std::vector<Vertex> GetCurrentLineFromRect(std::vector<Vertex> rect, double y)
 	line.push_back(P1);
 	line.push_back(P2);
 
-	std::cout << "Point 1 de la ligne courante : " << P1 << std::endl;
-	std::cout << "Point 2 de la ligne courante : " << P2 << std::endl;
-
 	return line;
 }
 
 std::vector<Vertex> FindIntersectionWithLine(std::vector<Vertex> rect, std::vector<Vertex> Line, std::vector<Vertex> Poly)
 {
-	std::cout << "Hello from FindIntersectionWithLine" << std::endl;
-
 	std::vector<Vertex> intersections;
 
 	Vertex P1 = Line[0]; //premier point de la ligne de balayage 
@@ -92,8 +78,6 @@ std::vector<Vertex> FindIntersectionWithLine(std::vector<Vertex> rect, std::vect
 		double yMax = P3.y > P4.y ? P3.y : P4.y;
 		double yMin = P3.y < P4.y ? P3.y : P4.y;
 
-		std::cout << "Intersection en y : " << Line[0].y << " => " << intersectionPoint << std::endl;
-
 		if(intersectionPoint.x < rect[0].x 
 		|| intersectionPoint.x > rect[2].x
 		|| intersectionPoint.y < rect[0].y
@@ -105,7 +89,6 @@ std::vector<Vertex> FindIntersectionWithLine(std::vector<Vertex> rect, std::vect
 		}
 
 		intersections.push_back(intersectionPoint); //ajouter l'intersection à la liste des intersections
-		std::cout << "Intersection validéééééée" << std::endl;
 	}
 	
 	std::sort(intersections.begin(), intersections.end(), sortVertex);
@@ -114,7 +97,7 @@ std::vector<Vertex> FindIntersectionWithLine(std::vector<Vertex> rect, std::vect
 
 std::vector<Vertex> Remplissage(std::vector<Vertex> Poly)
 {
-	std::cout << "Hello from Debug Remplissage" << std::endl;
+	std::cout << "Hello from Remplissage" << std::endl;
 
 	std::vector<Vertex> verticesToDraw; //stockage des vertices à draw
 

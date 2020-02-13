@@ -41,9 +41,9 @@ std::vector<Vertex> vertices;
 std::vector<Vertex> verticesToDraw;
 std::vector<int> shapesSizes; 
 std::vector<Vertex> tabMenuFormeVertices;
-std::vector<int> idFisrtVertexForme;
+std::vector<int> idFirstVertexForme;
 std::vector<Vertex> tabMenuFenetreVertices;
-std::vector<int> idFisrtVertexFenetre;
+std::vector<int> idFirstVertexFenetre;
 
 //variables pour gui
 Color choosedColor(1.f, 1.f, 1.f);

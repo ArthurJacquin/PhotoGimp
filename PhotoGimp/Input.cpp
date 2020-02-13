@@ -16,9 +16,9 @@ extern std::vector<Vertex> vertices;
 extern std::vector<Vertex> verticesToDraw;
 extern std::vector<int> shapesSizes;
 extern std::vector<Vertex> tabMenuFormeVertices;
-extern std::vector<int> idFisrtVertexForme;
+extern std::vector<int> idFirstVertexForme;
 extern std::vector<Vertex> tabMenuFenetreVertices;
-extern std::vector<int> idFisrtVertexFenetre;
+extern std::vector<int> idFirstVertexFenetre;
 extern UI button;
 
 bool canCreatePoint = false;
@@ -66,7 +66,7 @@ void Input::waitForBool()
 	else if (clickMenuRemplissage == true)
 	{
 		clickMenuForme = false;
-		canCreatePoint = true;
+		canCreatePoint = false;
 		clickMenuDecoupe = false;
 		clickMenuFenetre = false;
 		clickMenuRemplissage = true;
@@ -100,10 +100,10 @@ void Input::deleteVertex()
 	shapesSizes.clear();
 
 	tabMenuFormeVertices.clear();
-	idFisrtVertexForme.clear();
+	idFirstVertexForme.clear();
 
 	tabMenuFenetreVertices.clear();
-	idFisrtVertexFenetre.clear();
+	idFirstVertexFenetre.clear();
 }
 
 void Input::decoupeForme()
@@ -116,14 +116,14 @@ void Input::decoupeForme()
 		shapesSizes.clear();
 		int currentFenetre = 0;
 
-		for (int i = 0; i < idFisrtVertexFenetre.size(); ++i)
+		for (int i = 0; i < idFirstVertexFenetre.size(); ++i)
 		{
 			std::vector<Vertex> fenetre;
 
-			if (currentFenetre == idFisrtVertexFenetre.size() - 1)
+			if (currentFenetre == idFirstVertexFenetre.size() - 1)
 			{
 				//Recuperation d'une des fenetres
-				for (int j = idFisrtVertexFenetre[currentFenetre]; j < tabMenuFenetreVertices.size(); ++j)
+				for (int j = idFirstVertexFenetre[currentFenetre]; j < tabMenuFenetreVertices.size(); ++j)
 				{
 					fenetre.push_back(tabMenuFenetreVertices[j]);
 				}
@@ -131,7 +131,7 @@ void Input::decoupeForme()
 			else 
 			{
 				//Recuperation d'une des fenetres
-				for (int j = idFisrtVertexFenetre[currentFenetre]; j < idFisrtVertexFenetre[currentFenetre + 1]; ++j)
+				for (int j = idFirstVertexFenetre[currentFenetre]; j < idFirstVertexFenetre[currentFenetre + 1]; ++j)
 				{
 					fenetre.push_back(tabMenuFenetreVertices[j]);
 				}
@@ -139,15 +139,15 @@ void Input::decoupeForme()
 			
 			int currentForme = 0;
 
-			for (int j = 0; j < idFisrtVertexForme.size(); ++j)
+			for (int j = 0; j < idFirstVertexForme.size(); ++j)
 			{
 				std::vector<Vertex> forme;
 				
 
-				if (currentForme == idFisrtVertexForme.size() - 1)
+				if (currentForme == idFirstVertexForme.size() - 1)
 				{
 					//Recuperation d'une des formes
-					for (int k = idFisrtVertexForme[currentForme]; k < tabMenuFormeVertices.size(); ++k)
+					for (int k = idFirstVertexForme[currentForme]; k < tabMenuFormeVertices.size(); ++k)
 					{
 						forme.push_back(tabMenuFormeVertices[k]);
 					}
@@ -155,7 +155,7 @@ void Input::decoupeForme()
 				else
 				{
 					//Recuperation d'une des formes
-					for (int k = idFisrtVertexForme[currentForme]; k < idFisrtVertexForme[currentForme + 1]; ++k)
+					for (int k = idFirstVertexForme[currentForme]; k < idFirstVertexForme[currentForme + 1]; ++k)
 					{
 						forme.push_back(tabMenuFormeVertices[k]);
 					}
@@ -187,14 +187,11 @@ void Input::decoupeForme()
 		//Remplassement des anciens vertices
 		vertices = newVertices;
 		tabMenuFormeVertices = newVertices;
-		idFisrtVertexForme = newIdForme;
+		idFirstVertexForme = newIdForme;
 
 		//Clear fenetres
 		tabMenuFenetreVertices.clear();
-		idFisrtVertexFenetre.clear();
-
-		for (int i = 0; i < vertices.size(); i++)
-			std::cerr << vertices[i] << std::endl;
+		idFirstVertexFenetre.clear();
 	}
 }
 
@@ -202,19 +199,44 @@ void Input::remplirForme()
 {
 	std::cout << "Remplir ! " << std::endl;
 
-	verticesToDraw = Remplissage(vertices); 
-	for (int i = 0; i < verticesToDraw.size(); ++i)
-	{
-		vertices.push_back(verticesToDraw[i]);
-		tabMenuFormeVertices.push_back(verticesToDraw[i]);
-	}
+	std::vector<Vertex> formeFill;
+	std::vector<int> idFormes = idFirstVertexForme;
+	std::vector<Vertex> tabFormes = tabMenuFormeVertices;
 
-	int currentId = shapesSizes.back();
-	for (int j = 0; j < verticesToDraw.size() * 0.5f; ++j)
+	int sumVerticesInShapes = 0;
+	for (int i = 0; i < shapesSizes.size() - 1; ++i)
+		sumVerticesInShapes += shapesSizes[i];
+
+	int currentForme = 0;
+	for (int formeId = 0; formeId < idFormes.size(); ++formeId)
 	{
-		idFisrtVertexForme.push_back(currentId + 2);
-		shapesSizes.push_back(2);
-		currentId += 2;
+		std::vector<Vertex> forme;
+		if (currentForme == idFormes.size() - 1)
+			//Recuperation d'une des formes
+			for (int i = idFormes[currentForme]; i < tabFormes.size(); ++i)
+				forme.push_back(tabFormes[i]);
+
+		else
+			//Recuperation d'une des formes
+			for (int i = idFormes[currentForme]; i < idFormes[currentForme + 1]; ++i)
+				forme.push_back(tabFormes[i]);
+
+		verticesToDraw = Remplissage(forme);
+		
+		for (int i = 0; i < verticesToDraw.size(); ++i)
+		{
+			vertices.push_back(verticesToDraw[i]);
+			tabMenuFormeVertices.push_back(verticesToDraw[i]);
+		}
+
+		for (int j = 0; j < verticesToDraw.size() * 0.5f; ++j)
+		{
+			idFirstVertexForme.push_back(idFirstVertexForme.back() + shapesSizes.back());
+			shapesSizes.push_back(2);
+			sumVerticesInShapes += 2;
+		}
+
+		currentForme++;
 	}
 }
 
@@ -243,10 +265,10 @@ void Input::drawCircle(Vertex center, Vertex FirstPoint, int nbPoints)
 		vertices.push_back(newPoint);
 	}
 
-	if (idFisrtVertexForme.size() == 0)
-		idFisrtVertexForme.push_back(0);
+	if (idFirstVertexForme.size() == 0)
+		idFirstVertexForme.push_back(0);
 	else
-		idFisrtVertexForme.push_back(shapesSizes.back() + idFisrtVertexForme.back());
+		idFirstVertexForme.push_back(shapesSizes.back() + idFirstVertexForme.back());
 
 	shapesSizes.push_back(nbPoints);
 }
@@ -263,7 +285,6 @@ void Input::mouse_button_callback(GLFWwindow * window, int button, int action, i
 			if (xpos > 220)
 			{
 				Vertex newPoint = Vertex(-1.0f + 2 * xpos / width, 1.0f - 2 * ypos / height, choosedColor.x, choosedColor.y, choosedColor.z);
-				std::cout << newPoint << std::endl;
 				vertices.push_back(newPoint);
 
 				if (clickMenuForme == true || clickCercle == true)
@@ -288,10 +309,10 @@ void Input::keyboard_button_callback(GLFWwindow* window, int key, int scancode, 
 	{
 		if (clickMenuForme)
 		{
-			if (idFisrtVertexForme.size() == 0)
-				idFisrtVertexForme.push_back(0);
+			if (idFirstVertexForme.size() == 0)
+				idFirstVertexForme.push_back(0);
 			else
-				idFisrtVertexForme.push_back(shapesSizes.back() + idFisrtVertexForme.back());
+				idFirstVertexForme.push_back(shapesSizes.back() + idFirstVertexForme.back());
 
 			int sumVerticesInShapes = 0;
 			for (int i = 0; i < shapesSizes.size(); ++i)
@@ -301,10 +322,10 @@ void Input::keyboard_button_callback(GLFWwindow* window, int key, int scancode, 
 		}
 		else if (clickMenuFenetre)
 		{
-			if (idFisrtVertexFenetre.size() == 0)
-				idFisrtVertexFenetre.push_back(0);
+			if (idFirstVertexFenetre.size() == 0)
+				idFirstVertexFenetre.push_back(0);
 			else
-				idFisrtVertexFenetre.push_back(shapesSizes.back() + idFisrtVertexFenetre.back());
+				idFirstVertexFenetre.push_back(shapesSizes.back() + idFirstVertexFenetre.back());
 
 			int sumVerticesInShapes = 0;
 			for (int i = 0; i < shapesSizes.size(); ++i)

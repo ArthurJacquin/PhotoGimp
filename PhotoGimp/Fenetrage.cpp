@@ -46,7 +46,6 @@ bool CheckIfClockwise(std::vector<Vertex> v)
 		som += (v[i + 1].x - v[i].x) * (v[i + 1].y + v[i].y);
 	}
 
-	std::cout << (som >= 0.f);
 	return som >= 0.f;
 }
 
@@ -110,10 +109,10 @@ std::vector<Vertex> Fenetrage(std::vector<Vertex> PL_Forme, std::vector<Vertex> 
 	Vertex cp2 = { 0.0, 0.0, 0.0, 1.0, 0.0 };
 
 	std::vector<Vertex> inputPolygon;
-	inputPolygon.resize(99);
+	inputPolygon.resize(9999);
 
 	std::vector<Vertex> newPolygon;
-	newPolygon.resize(99);
+	newPolygon.resize(9999);
 
 	for (int i = 0; i < PL_Forme.size(); i++)
 	{
@@ -131,41 +130,30 @@ std::vector<Vertex> Fenetrage(std::vector<Vertex> PL_Forme, std::vector<Vertex> 
 		int counter = 0;
 		cp1 = PW_Fenetre[j];
 		cp2 = PW_Fenetre[(j + 1) % PW_Fenetre.size()];
-		std::cerr << "newPolygonSize : " << newPolygonSize << std::endl;
 
 		for (int i = 0; i < newPolygonSize; i++)
 		{
 			s = inputPolygon[i];
 			e = inputPolygon[(i + 1) % newPolygonSize];
-			std::cerr << "inputPolygon : " << inputPolygon.size() << std::endl;
+
 			//visible si ses deux extrémités sont visibles 
 			if (visible(s, cp1, cp2, clockWise) && visible(e, cp1, cp2, clockWise))
 			{
-				std::cerr << "visible si ses deux extremites sont visibles " << std::endl;
 				newPolygon[counter++] = e;
 			}
 			//Premier vertex est à l'extérieur, le second à l'intérieur
 			else if (!visible(s, cp1, cp2, clockWise) && visible(e, cp1, cp2, clockWise))
 			{
-				std::cerr << "Premier vertex est a l'exterieur, le second à l'interieur " << std::endl;
 				newPolygon[counter++] = intersection(s, e, cp1, cp2);
 				newPolygon[counter++] = e;
 			}
 			//Premier intérieur, deuxieme extérieur
 			else if (visible(s, cp1, cp2, clockWise) && !visible(e, cp1, cp2, clockWise))
 			{
-				std::cerr << "Premier interieur, deuxieme exterieur" << std::endl;
 				newPolygon[counter++] = intersection(s, e, cp1, cp2);
-			}
-			// invisible si ses deux extrémités sont invisibles
-			else if (!visible(s, cp1, cp2, clockWise) && !visible(e, cp1, cp2, clockWise))
-			{
-				std::cerr << "la je fais rien lol" << std::endl;
 			}
 		}
 		newPolygonSize = counter;
-		std::cerr << "counter : " << counter << std::endl;
-		//newPolygon.resize(counter);
 	}
 	newPolygon.resize(newPolygonSize);
 
