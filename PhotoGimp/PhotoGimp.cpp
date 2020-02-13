@@ -174,8 +174,8 @@ void displayGUI()
 	ImGui::TextColored(ImVec4(0.9, 0.1, 0.1, 1.0), "  Bienvenue dans PhotoGimp ");
 	ImGui::Text(" ");
 	ImGui::Text("Vous pouvez creer plusieurs");
-	ImGui::Text("formes et les decouper avec");
-	ImGui::Text("      des fenetres");
+	ImGui::Text(" formes, les decouper avec");
+	ImGui::Text("des fenetres et les remplir");
 	ImGui::Text(" ");
 	ImGui::Text(" -------------------------  ");
 	ImGui::Text("  Choississez une couleur");
