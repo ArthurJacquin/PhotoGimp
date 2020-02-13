@@ -47,6 +47,7 @@ std::vector<int> idFirstVertexFenetre;
 
 //variables pour gui
 Color choosedColor(1.f, 1.f, 1.f);
+int circleEdges = 40;
 bool clickMenuForme = false;
 bool clickMenuFenetre = false;
 bool clickMenuRemplissage = false;
@@ -195,6 +196,12 @@ void displayGUI()
 	{
 		clickMenuForme = true;
 	}
+
+	if (ImGui::InputInt("Nb aretes", &circleEdges))
+	{
+
+	}
+
 	if (ImGui::Button("Tracer un cercle"))
 	{
 		clickCercle = true;

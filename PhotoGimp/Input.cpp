@@ -31,6 +31,7 @@ extern bool clickDelete;
 extern bool clickCercle;
 
 extern Color choosedColor;
+extern int circleEdges;
 
 void Input::waitForBool()
 {
@@ -339,9 +340,9 @@ void Input::keyboard_button_callback(GLFWwindow* window, int key, int scancode, 
 			for (int i = 0; i < shapesSizes.size(); ++i)
 				sumVerticesInShapes += shapesSizes[i];
 
-			if (vertices.size() - sumVerticesInShapes == 2);
+			if (vertices.size() - sumVerticesInShapes == 2 && circleEdges > 3 && circleEdges < 360);
 			{
-				drawCircle(vertices[vertices.size() - 2], vertices.back(), 30);
+				drawCircle(vertices[vertices.size() - 2], vertices.back(), circleEdges);
 			}
 
 		}
