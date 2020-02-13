@@ -25,11 +25,11 @@ std::vector<Vertex> RectEG(std::vector<Vertex> Poly)
 			yMin = Poly[i].y;
 	}
 
-	Vertex P1 = Vertex(xMin, yMin, 0.f, 1.f, 1.f);
-	Vertex P2 = Vertex(xMin, yMax, 0.f, 1.f, 1.f);
-	Vertex P3 = Vertex(xMax, yMax, 0.f, 1.f, 1.f);
-	Vertex P4 = Vertex(xMax, yMin, 0.f, 1.f, 1.f);
-
+	Vertex P1 = Vertex(xMin - 0.05f, yMin - 0.05f, 0.f, 1.f, 1.f);
+	Vertex P2 = Vertex(xMin - 0.05f, yMax + 0.05f, 0.f, 1.f, 1.f);
+	Vertex P3 = Vertex(xMax + 0.05f, yMax + 0.05f, 0.f, 1.f, 1.f);
+	Vertex P4 = Vertex(xMax + 0.05f, yMin - 0.05f, 0.f, 1.f, 1.f);
+	 
 	rect.push_back(P1);
 	rect.push_back(P2);
 	rect.push_back(P3);
@@ -86,6 +86,7 @@ std::vector<Vertex> FindIntersectionWithLine(std::vector<Vertex> rect, std::vect
 		P3.y = Poly[i].y;
 		P4.x = Poly[j].x;
 		P4.y = Poly[j].y;
+
 		Vertex intersectionPoint = intersection(P1, P2, P3, P4); //intersection entre la ligne et le côté du poly
 
 		double yMax = P3.y > P4.y ? P3.y : P4.y;
@@ -97,8 +98,8 @@ std::vector<Vertex> FindIntersectionWithLine(std::vector<Vertex> rect, std::vect
 		|| intersectionPoint.x > rect[2].x
 		|| intersectionPoint.y < rect[0].y
 		|| intersectionPoint.y > rect[2].y
-		|| intersectionPoint.y < yMin
-		|| intersectionPoint.y > yMax)
+		|| intersectionPoint.y <= yMin
+		|| intersectionPoint.y >= yMax)
 		{
 			continue;
 		}
@@ -111,9 +112,7 @@ std::vector<Vertex> FindIntersectionWithLine(std::vector<Vertex> rect, std::vect
 	return intersections;
 }
 
-
-
-std::vector<Vertex> DebugRemplissage(std::vector<Vertex> Poly)
+std::vector<Vertex> Remplissage(std::vector<Vertex> Poly)
 {
 	std::cout << "Hello from Debug Remplissage" << std::endl;
 
@@ -123,11 +122,10 @@ std::vector<Vertex> DebugRemplissage(std::vector<Vertex> Poly)
 	std::vector<Vertex> currLine; //stockage de la ligne actuelle
 	std::vector<Vertex> intersections; //stockage des intersections par ligne
 	int nbIntersections = 0; //nombre d'intersections par ligne
-	
 
 	double currY;
 
-	for (currY = rect[0].y; currY < rect[2].y; currY += 0.01f) //itération de ligne en ligne
+	for (currY = rect[0].y; currY < rect[2].y; currY += 0.006f) //itération de ligne en ligne
 	{
 		currLine = GetCurrentLineFromRect(rect, currY); //récupère la ligne courante via la coordonnée en double
 		intersections = FindIntersectionWithLine(rect, currLine, Poly); //récupère les intersections entre la ligne et le poly
@@ -136,10 +134,21 @@ std::vector<Vertex> DebugRemplissage(std::vector<Vertex> Poly)
 		if (nbIntersections == 1)
 			continue;
 
-		if (nbIntersections % 2 != 0) {
-			verticesToDraw.push_back(intersections[0]);
-			verticesToDraw.push_back(intersections.back());
-			continue;
+		if (nbIntersections % 2 != 0) 
+		{
+			/*for (int i = 0; i < Poly.size(); ++i)
+			{
+				for (int j = 0; j < intersections.size(); ++j)
+				{
+					float distance = sqrt(pow(Poly[i].x - intersections[j].x, 2) + pow(Poly[i].y - intersections[j].y, 2));
+					if (distance < FLT_EPSILON) 
+					{
+						intersections.erase(intersections.begin() + j);
+						nbIntersections--;
+						break;
+					}
+				}
+			}*/
 		}
 
 		for (int i = 0; i < nbIntersections; ++i)

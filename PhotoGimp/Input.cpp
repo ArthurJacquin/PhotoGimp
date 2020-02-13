@@ -202,16 +202,19 @@ void Input::remplirForme()
 {
 	std::cout << "Remplir ! " << std::endl;
 
-	verticesToDraw = DebugRemplissage(vertices); 
+	verticesToDraw = Remplissage(vertices); 
 	for (int i = 0; i < verticesToDraw.size(); ++i)
 	{
 		vertices.push_back(verticesToDraw[i]);
+		tabMenuFormeVertices.push_back(verticesToDraw[i]);
 	}
 
-	int size = 2;
+	int currentId = shapesSizes.back();
 	for (int j = 0; j < verticesToDraw.size() * 0.5f; ++j)
 	{
-		shapesSizes.push_back(size);
+		idFisrtVertexForme.push_back(currentId + 2);
+		shapesSizes.push_back(2);
+		currentId += 2;
 	}
 }
 
@@ -317,7 +320,7 @@ void Input::keyboard_button_callback(GLFWwindow* window, int key, int scancode, 
 
 			if (vertices.size() - sumVerticesInShapes == 2);
 			{
-				drawCircle(vertices[vertices.size() - 2], vertices.back(), 45);
+				drawCircle(vertices[vertices.size() - 2], vertices.back(), 30);
 			}
 
 		}
